@@ -6,7 +6,7 @@
 //#include "conio.h"
 #include <unistd.h> // for sleep()
 #include <cstring>  
-
+#include <regex>
 #include <fstream>// archivos 
 
 using namespace std; 
@@ -24,68 +24,6 @@ shell::shell(string commandd)
 }
 
 // - - - - - FUNCIONES IMPLEMENTADAS - - - - -
-
-//función para saber que coamndo pasaron 
-void shell::verificarComandos(char comm[])
-{
-  string partido[6];
-  cout<< "Verificar comandos"<< comm << sizeof(comm)<<endl;
-  char *ptr; // declare a ptr pointer  
-  ptr = strtok(comm, " ");
-  cout<< "ptr es "<< ptr <<endl;
-  int i =0;
-  partido[0]=ptr;
-  while (ptr != NULL)  
-    {  
-      i++;
-      cout << ptr  << endl; // print the string token  
-      ptr = strtok (NULL, " ");  
-      cout << "hola"  << endl;
-      partido[i]=ptr;
-      cout << "hola2"  << endl;
-    }
-
-    /*if(strcpy()){
-      
-    }
-  else if(com.compare("cargar_comandos")){
-    
-  }
-  else if(com.compare("cargar_elementos")){
-    
-  }
-  else if(com.compare( "agregar_movimientos")){
-    
-  }
-  else if(com.compare( "agregar_analisis")){
-    
-  }
-  else if(com.compare( "agregar_elementos")){
-    
-  }
-  else if(com.compare( "guardar")){
-    
-  }
-  else if(com.compare( "simular_comandos")){
-    
-  }
-  else if(com.compare( "en_cuadrante")){
-    
-  }
-  else if(com.compare("salir")){
-    
-  }
-  else if(com.compare("ubicar_elementos")){
-    
-  }
-  else if(com.compare("crear_mapa")){
-    
-  }
-  else if(com.compare("ruta_mas_larga")){
-    
-  }*/
-}
-
 // Funcion Help-
 void shell::help()
 {
@@ -118,6 +56,115 @@ void shell::help()
     cout << "-================================================================================================-" << endl;
 }
 
+//función para saber que coamndo pasaron 
+void shell::verificarComandos(char comm[])
+{
+  string partido[6];
+  char *ptr; // declare a ptr pointer  
+  ptr = strtok(comm, " ");
+  int i =0;
+  partido[i]=ptr;
+  while (ptr != NULL)  
+    {  
+      i++; 
+      ptr = strtok (NULL, " "); 
+      if(ptr != NULL){
+        partido[i]=ptr;
+      }
+      
+    }
+  cout<< "el comando fue : "<< partido[0]<<endl;
+  if(partido[0].compare("help")==0){
+      help();
+  }
+  else if(partido[0].compare("cargar_comandos")==0){
+    cargarComandos();
+  }
+  else if(partido[0].compare("cargar_elementos")==0){
+    
+    regex regex("(.*?)\\.(txt)$");
+    if(regex_match(partido[1], regex)){
+      cout<< "elementos cargados correctamente desde nombre_archivo ."<< endl;
+    }
+    else{
+      cout<< "nombre_archivo no se encuentra o no puede leerse."<<endl;
+    }
+  }
+  else if(partido[0].compare( "agregar_movimientos")==0){
+    if(partido[1].empty()||partido[2].empty()||partido[3].empty()){
+      cout<< "ingrese todos los parametrod"<<endl;
+    }
+    else{
+      int magnitud = stoi(partido[2]);
+      agregarMovimiento(partido[1],magnitud,partido[3]);
+    }
+    
+  }
+  else if(partido[0].compare( "agregar_analisis")==0){
+    agregarAnalisis(partido[1],partido[2],partido[3]);
+    
+  }
+  else if(partido[0].compare( "agregar_elementos")==0){
+    if(partido[1].empty()||partido[2].empty()||partido[3].empty()||partido[4].empty()||partido[5].empty()){
+      cout<< "Ingrese todos los argumentos"<< endl;
+    }
+    else{
+      int tam = stoi(partido[2]);
+      int cordx = stoi(partido[4]);
+      int cordy = stoi(partido[5]);
+      agregarElemento(partido[1],tam,partido[3],cordx,cordy);
+    }
+    
+  }
+  else if(partido[0].compare( "guardar")==0){
+    regex regex("(.*?)\\.(txt|csv|CSV|doc|DOC|pdf|PDF)$");
+    if(regex_match(partido[1], regex)){
+      cout<< "La información ha sido guardada en "<< partido[1]<< endl;
+    }
+    else{
+      cout<< "Error guardando en "<<partido[1] <<endl;
+    }
+    
+  }
+  else if(partido[0].compare( "simular_comandos")==0){
+    if(partido[1].empty() || partido[2].empty()){
+      cout<< "La información requerida no está almacenada en memoria"<<endl;
+    }
+    else{
+      int cordx = stoi(partido[1]);
+      int cordy = stoi(partido[2]);
+      simularComandos(cordx,cordy);
+    }
+    
+    
+  }
+  else if(partido[0].compare( "en_cuadrante")==0){
+    if(partido[4].empty()){
+      cout<< "Los elementos no han sido ubicados todavía"<<endl;
+    }else{
+      int corx1=stoi(partido[1]);
+      int corx2=stoi(partido[2]);
+      int cory1=stoi(partido[3]);
+      int cory2=stoi(partido[4]);
+      enCuadrante(corx1,corx2,cory1,cory2);
+    }
+    
+    
+  }
+  else if(partido[0].compare("salir")==0){
+    salir();    
+  }
+  else if(partido[0].compare("ubicar_elementos")==0){
+    ubicarElementos();
+    
+  }
+  else if(partido[0].compare("crear_mapa")==0){
+    crearMapa();
+  }
+  else if(partido[0].compare("ruta_mas_larga")==0){
+    rutaMasLarga();
+  }
+}
 
 // Funcion de inicializacion.
 void shell::iniciarShell()
@@ -130,7 +177,7 @@ void shell::iniciarShell()
 
   cout << "Cargando, por favor espere..." << endl;
   cout << '-' << flush;
-    for (int i = 0; i < 0; i++ ) 
+    for (int i = 0; i < 1; i++ ) 
     {
         std::cout << "\b\b\b\b\b\b\b\b\b\bLoading   " << std::flush;
         sleep(1);
@@ -185,6 +232,7 @@ void shell::iniciarShell()
     char str[100];
     cout << "~$";
     cin.getline(str, 100);
+    //cin.ignore();
     verificarComandos(str);
   }
 }
@@ -196,22 +244,48 @@ void shell::iniciarShell()
 void shell::cargarComandos()
 {
   cout << "Cargar comandos." << endl;
+
+  string buffer;
+  ifstream lectura;
+  string nombre = "instrucciones.txt";
+  lectura.open("intrucciones.txt",ios::in);
+  bool isEmpty = lectura.peek() == EOF;
+  if(lectura.fail()==true){
+    cout << "No se pudo abrir el archivo " + nombre << endl;
+  }
+  if(isEmpty){
+    cout <<"El archivo " + nombre +" esta vacio";
+  }
+    
+  else{
+    // Aqui van las intrucciones de lectura :)
+    cout << "El archivo: " + nombre + " se abrio exitosamente" <<endl;
+  }
+
+
+  
+  lectura.close();
 }
 
 
 // Funcion de cargar elementos.
-void shell::cargarElementos()
+void shell::cargarElementos(string nombre )
 {
-  cout << "Cargar elementos." << endl;
   string buffer;
   ifstream lectura;
+  nombre = "instrucciones.txt";
   lectura.open("intrucciones.txt",ios::in);
+  bool isEmpty = lectura.peek() == EOF;
   if(lectura.fail()==true){
-    cout << "No se pudo abrir el archivo" << endl;
+    cout << "No se pudo abrir el archivo " + nombre << endl;
   }
+  if(isEmpty){
+    cout <<"El archivo " + nombre +" esta vacio";
+  }
+    
   else{
     // Aqui van las intrucciones de lectura :)
-    cout << "El archivo se abrio exitosamente" <<endl;
+    cout << "El archivo: " + nombre + " se abrio exitosamente" <<endl;
   }
 
 
@@ -221,23 +295,46 @@ void shell::cargarElementos()
 
 
 // Funcion de agregar movimiento.
-void shell::agregarMovimiento()
+void shell::agregarMovimiento(string tipo,int magnitud,string unidad)
 {
-  cout << "Agregar movimiento." << endl;
+  //cout << "Agregar movimiento." << endl;
+  //cout << tipo<< magnitud<< unidad<<endl;
+  if(!(tipo.compare("avanzar")==0 ||tipo.compare("girar")==0 )){
+    cout<< "La información del movimiento no corresponde a los datos esperados(tipo, magnitud, unidad)"<<endl;
+    return;
+  }
+  if(magnitud<0){
+    cout<< "La información del movimiento no corresponde a los datos esperados(tipo, magnitud, unidad)"<<endl;
+    return;
+  }
 }
 
 
 // Funcion de agregar analisis. 
-void shell::agregarAnalisis()
+void shell::agregarAnalisis(string tipo,string objteo, string comentario)
 {
-  cout << "Agregar analisis." << endl;
+  if(!(tipo.compare("fotografiar")==0 ||tipo.compare("composicion")==0 ||tipo.compare("perforar")==0 )){
+    cout<< "La información del análisis no corresponde a los datos esperados (tipo,objeto, comentario)"<<endl;
+    return;
+  }
+  cout << tipo << objteo<< comentario <<endl;
 }
 
 
 // Funcion de agregar elementos.
-void shell::agregarElemento()
+void shell::agregarElemento(string tipoComp , int tamanio,string unidadMedida,int cordx,int cordy)
 {
-  cout << "Agregar elementos." << endl;
+  if(tipoComp.compare("roca")==0||tipoComp.compare("crater")==0||tipoComp.compare("monticulo")==0||tipoComp.compare("duna")==0){
+    cout<< "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)"<<endl;
+    return;
+  }
+  if(tamanio<0){
+    cout<< "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)"<<endl;
+    return;
+  }
+  
+  cout << "El elemento ha sido agregado exitosamente." << endl;
+  
 }
 
 
@@ -247,37 +344,41 @@ void shell::guardar()
 }
 
 
-void shell::simularComandos()
+void shell::simularComandos(int x,int y)
 {
-  cout << "Simular comandos "<<endl;
+  cout << "La simulación de los comandos, a partir de la posición (coordX,coordY ), "<<endl;
 }
 
 
-void shell::enCuadrante()
+void shell::enCuadrante(int x1,int x2,int y1,int y2)
 {
   cout << "enCuadrante"<<endl;
+  cout << "Los elementos ubicados en el cuadrante solicitado son: "<<x1<< x2<<y1 << y2<<endl;
 }
 
 
 void shell::salir()
 {
-    
+  
+    exit(0);
 }
 
 void shell::ubicarElementos()
 {
-    
+    cout << "Funcion Elementos"<<endl;
 }
 
 void shell::crearMapa()
 {
-    
+    cout << "Funcion crear Mapa"<<endl;
 }
   
 void shell::rutaMasLarga()
 {
-    
+    cout << "Funcion ruta Mas Larga"<<endl;
 }
+
+
 
 
 
