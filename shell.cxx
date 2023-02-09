@@ -28,7 +28,7 @@ shell::shell(string commandd)
 //función para saber que coamndo pasaron 
 void shell::verificarComandos(char comm[])
 {
-  string partido[5];
+  string partido[6];
   cout<< "Verificar comandos"<< comm << sizeof(comm)<<endl;
   char *ptr; // declare a ptr pointer  
   ptr = strtok(comm, " ");
@@ -40,9 +40,11 @@ void shell::verificarComandos(char comm[])
       i++;
       cout << ptr  << endl; // print the string token  
       ptr = strtok (NULL, " ");  
+      cout << "hola"  << endl;
       partido[i]=ptr;
+      cout << "hola2"  << endl;
     }
-cout << "hola"  << endl;
+
     /*if(strcpy()){
       
     }
