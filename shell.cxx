@@ -68,6 +68,10 @@ void shell::verificarComandos(char comm[])
     {  
       i++; 
       ptr = strtok (NULL, " "); 
+      if(!partido[6].empty()){
+        cout<<"demasiados argumentos"<<endl;
+        break;
+      }
       if(ptr != NULL){
         partido[i]=ptr;
       }
@@ -78,25 +82,25 @@ void shell::verificarComandos(char comm[])
       help();
   }
   else if(partido[0].compare("cargar_comandos")==0){
-    cargarComandos();
+    
+    cargarComandos(partido[1]);
   }
   else if(partido[0].compare("cargar_elementos")==0){
-    
-    regex regex("(.*?)\\.(txt)$");
-    if(regex_match(partido[1], regex)){
-      cout<< "elementos cargados correctamente desde nombre_archivo ."<< endl;
-    }
-    else{
-      cout<< "nombre_archivo no se encuentra o no puede leerse."<<endl;
-    }
+    cargarElementos(partido[1]);
   }
   else if(partido[0].compare( "agregar_movimientos")==0){
     if(partido[1].empty()||partido[2].empty()||partido[3].empty()){
       cout<< "ingrese todos los parametrod"<<endl;
     }
     else{
-      int magnitud = stoi(partido[2]);
-      agregarMovimiento(partido[1],magnitud,partido[3]);
+      try{
+        int magnitud = stoi(partido[2]);
+        agregarMovimiento(partido[1],magnitud,partido[3]);
+      }
+      catch(exception &err){
+        cout<<"Conversion failure"<<endl;
+      }
+      
     }
     
   }
@@ -109,10 +113,17 @@ void shell::verificarComandos(char comm[])
       cout<< "Ingrese todos los argumentos"<< endl;
     }
     else{
-      int tam = stoi(partido[2]);
-      int cordx = stoi(partido[4]);
-      int cordy = stoi(partido[5]);
-      agregarElemento(partido[1],tam,partido[3],cordx,cordy);
+      try{
+        int tam = stoi(partido[2]);
+        int cordx = stoi(partido[4]);
+        int cordy = stoi(partido[5]);
+        agregarElemento(partido[1],tam,partido[3],cordx,cordy);
+      }
+      catch(exception &err){
+        cout<<"Conversion failure"<<endl;
+      }
+      
+      
     }
     
   }
@@ -131,9 +142,15 @@ void shell::verificarComandos(char comm[])
       cout<< "La información requerida no está almacenada en memoria"<<endl;
     }
     else{
-      int cordx = stoi(partido[1]);
-      int cordy = stoi(partido[2]);
-      simularComandos(cordx,cordy);
+      try{
+        int cordx = stoi(partido[1]);
+        int cordy = stoi(partido[2]);
+        simularComandos(cordx,cordy);
+      }
+      catch(exception &err){
+         cout<<"Conversion failure"<<endl;
+      }
+      
     }
     
     
@@ -142,14 +159,18 @@ void shell::verificarComandos(char comm[])
     if(partido[4].empty()){
       cout<< "Los elementos no han sido ubicados todavía"<<endl;
     }else{
-      int corx1=stoi(partido[1]);
-      int corx2=stoi(partido[2]);
-      int cory1=stoi(partido[3]);
-      int cory2=stoi(partido[4]);
-      enCuadrante(corx1,corx2,cory1,cory2);
-    }
-    
-    
+      try{
+        int corx1=stoi(partido[1]);
+        int corx2=stoi(partido[2]);
+        int cory1=stoi(partido[3]);
+        int cory2=stoi(partido[4]);
+        enCuadrante(corx1,corx2,cory1,cory2);
+      }
+      catch(exception &err){
+         cout<<"Conversion failure"<<endl;
+      }
+      
+    } 
   }
   else if(partido[0].compare("salir")==0){
     salir();    
@@ -241,13 +262,20 @@ void shell::iniciarShell()
 
 
 // Funcion de cargar comandos.
-void shell::cargarComandos()
+void shell::cargarComandos(string nombre)
 {
   cout << "Cargar comandos." << endl;
 
   string buffer;
   ifstream lectura;
-  string nombre = "instrucciones.txt";
+  //string nombre = "instrucciones.txt";
+  regex regex("(.*?)\\.(txt)$");
+  if(regex_match(nombre, regex)){
+      cout<< "Archivo valido ."<< endl;
+  }
+  else{
+      cout<< "nombre_archivo no se encuentra o no puede leerse."<<endl;
+  }
   lectura.open("intrucciones.txt",ios::in);
   bool isEmpty = lectura.peek() == EOF;
   if(lectura.fail()==true){
@@ -273,8 +301,15 @@ void shell::cargarElementos(string nombre )
 {
   string buffer;
   ifstream lectura;
-  nombre = "instrucciones.txt";
-  lectura.open("intrucciones.txt",ios::in);
+  //nombre = "instrucciones.txt";
+  regex regex("(.*?)\\.(txt)$");
+  if(regex_match(nombre, regex)){
+      cout<< "archivo valido ."<< endl;
+  }
+  else{
+      cout<< "nombre_archivo no se encuentra o no puede leerse."<<endl;
+  }
+  lectura.open(nombre,ios::in);
   bool isEmpty = lectura.peek() == EOF;
   if(lectura.fail()==true){
     cout << "No se pudo abrir el archivo " + nombre << endl;
