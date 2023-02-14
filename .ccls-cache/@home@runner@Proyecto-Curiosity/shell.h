@@ -1,3 +1,5 @@
+//Nombres : Alberto Vigna , Alejandro Salamanca ,Andres Salamanca , Camilo Martinez
+
 #include <string>
 #include <iostream>
 
@@ -19,7 +21,7 @@ public:
   void verificarComandos(char comm[]);
   void help();
   void iniciarShell();
-  void cargarComandos();
+  void cargarComandos(string nombreDocumento);
   void cargarElementos(string nombre);
   void agregarMovimiento(string tipo,int magnitud,string unidad);
   void agregarAnalisis(string tipo,string objteo, string comentario);

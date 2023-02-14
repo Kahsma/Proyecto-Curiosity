@@ -3,7 +3,7 @@
 #include "shell.h"
 #include <unistd.h> // for sleep()
 
-
+//Nombres : Alberto Vigna , Alejandro Salamanca ,Andres Salamanca , Camilo Martinez
 using namespace std;
 int main(int argc, char *argv[]) 
 {
