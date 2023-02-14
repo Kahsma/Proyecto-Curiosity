@@ -193,11 +193,11 @@ void shell::verificarComandos(char comm[])
 void shell::iniciarShell()
 {
   //Borrar consola
-  if (system ("clear")==-1)
-  {
-    cout<<"ERROR"<<endl;
-  }
-
+  //if (system ("CLS")==-1)
+  //{
+   // cout<<"ERROR"<<endl;
+  //}
+  limpiar();
   cout << "Cargando, por favor espere..." << endl;
   cout << '-' << flush;
     for (int i = 0; i < 1; i++ ) 
@@ -224,11 +224,11 @@ void shell::iniciarShell()
         sleep(1);
     }
 
-  if (system ("clear")==-1)
-  {
-    cout<<"ERROR"<<endl;
-  }
-
+  //if (system ("CLS")==-1)
+  //{
+   // cout<<"ERROR"<<endl;
+  //}
+  limpiar();
   cout << "-================================================================================================-" << endl;
   cout << "" << endl;
   cout<<"      /$$$$$$  /$$   /$$ /$$$$$$$  /$$$$$$  /$$$$$$   /$$$$$$  /$$$$$$ /$$$$$$$$ /$$     /$$"<<endl;
@@ -414,7 +414,52 @@ void shell::rutaMasLarga()
 {
     cout << "Funcion ruta Mas Larga"<<endl;
 }
-
+void shell::limpiar(){
+  #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+   //define something for Windows (32-bit and 64-bit, this part is common)
+   #ifdef _WIN64
+    if (system ("CLS")==-1)
+    {
+      cout<<"ERROR"<<endl;
+    }
+      //define something for Windows (64-bit only)
+   #else
+    if (system ("CLS")==-1)
+    {
+      cout<<"ERROR"<<endl;
+    }
+      //define something for Windows (32-bit only)
+   #endif
+#elif __APPLE__
+    #include <TargetConditionals.h>
+    #if TARGET_IPHONE_SIMULATOR
+         // iOS, tvOS, or watchOS Simulator
+    #elif TARGET_OS_MACCATALYST
+         // Mac's Catalyst (ports iOS API into Mac, like UIKit).
+    #elif TARGET_OS_IPHONE
+        // iOS, tvOS, or watchOS device
+    #elif TARGET_OS_MAC
+        // Other kinds of Apple platforms
+    #else
+    #   error "Unknown Apple platform"
+    #endif
+#elif __ANDROID__
+    // Below __linux__ check should be enough to handle Android,
+    // but something may be unique to Android.
+#elif __linux__
+  if (system ("clear")==-1)
+    {
+      cout<<"ERROR"<<endl;
+    }
+    // linux
+#elif __unix__ // all unices not caught above
+    // Unix
+#elif defined(_POSIX_VERSION)
+    // POSIX
+#else
+#   error "Unknown compiler"
+#endif
+}
 
 
 

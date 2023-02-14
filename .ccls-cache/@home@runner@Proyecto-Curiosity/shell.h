@@ -33,4 +33,5 @@ public:
   void ubicarElementos();
   void crearMapa();
   void rutaMasLarga();
+  void limpiar();
 };
