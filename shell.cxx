@@ -428,6 +428,9 @@ void shell::limpiar(){
         }
 	#elif __unix__
 	    printf("Other unix OS\n");
+      if (system ("clear")==-1){
+          cout<<"ERROR"<<endl;
+        }
   #elif __APPLE__
 	    printf("Other unix OS\n");
 	#else
