@@ -415,48 +415,25 @@ void shell::rutaMasLarga()
     cout << "Funcion ruta Mas Larga"<<endl;
 }
 void shell::limpiar(){
-  #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-  if (system ("CLS")==-1)
-    {
-      cout<<"ERROR"<<endl;
-    }
-   //define something for Windows (32-bit and 64-bit, this part is common)
-   #ifdef _WIN64
-    if (system ("CLS")==-1)
-    {
-      cout<<"ERROR"<<endl;
-    }
-      //define something for Windows (64-bit only)
-   #else
-    if (system ("CLS")==-1)
-    {
-      cout<<"ERROR"<<endl;
-    }
-      //define something for Windows (32-bit only)
-   #endif
-#elif __APPLE__
-    #include <TargetConditionals.h>
-    if (system ("clear")==-1)
-    {
-      cout<<"ERROR"<<endl;
-    }
-    #endif
-#elif __ANDROID__
-    // Below __linux__ check should be enough to handle Android,
-    // but something may be unique to Android.
-#elif __linux__
-  if (system ("clear")==-1)
-    {
-      cout<<"ERROR"<<endl;
-    }
-    // linux
-#elif __unix__ // all unices not caught above
-    // Unix
-#elif defined(_POSIX_VERSION)
-    // POSIX
-#else
-#   error "Unknown compiler"
-#endif
+  
+  #ifdef _WIN32
+      printf("Windows\n");
+	    if (system ("CLS")==-1){
+        cout<<"ERROR"<<endl;
+        }
+	#elif __linux__
+      printf("Other linux OS\n");
+	    if (system ("clear")==-1){
+        cout<<"ERROR"<<endl;
+        }
+	#elif __unix__
+	    printf("Other unix OS\n");
+  #elif __APPLE__
+	    printf("Other unix OS\n");
+	#else
+	    printf("Unidentified OS\n");
+	#endif
+  
 }
 
 
