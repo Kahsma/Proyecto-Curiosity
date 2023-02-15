@@ -433,6 +433,9 @@ void shell::limpiar(){
         }
   #elif __APPLE__
 	    printf("Other unix OS\n");
+      if (system ("clear")==-1){
+          cout<<"ERROR"<<endl;
+        }
 	#else
 	    printf("Unidentified OS\n");
 	#endif
