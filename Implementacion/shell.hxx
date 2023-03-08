@@ -1,5 +1,5 @@
 // Nombres : Alberto Vigna , Alejandro Salamanca ,Andres Salamanca , Camilo Martinez
-
+#include <cmath>
 #include <iostream>
 #include <map>
 #include <stdlib.h>
@@ -671,29 +671,97 @@ void shell::guardar(queue<string> cInstrucciones, string tipoA, string nomArchiv
   }
 }
 
-void shell::simularComandos(int coordenada_x, int coordenada_y)
+void shell::simularComandos(int coordenada_x,int coordenada_y)
 {
-  // Coordenadas iniciales (AQUI SE PONDRIAN LAS COORDENADAS INICIALES DONDE SE ENCUENTRA EL ROBOT):
-  int coordenada_inicial_x = 0;
-  int coordenada_inicial_y = 0;
+  queue<Comandos> movimientosASimular;
+  vector<string> parametroDeMovimiento;
 
   // Coordenadas actuales:
-  int coordenada_actual_x = coordenada_inicial_x;
-  int coordenada_actual_y = coordenada_inicial_y;
+  cout << "Coordenadas iniciales en X: " << coordenada_x << endl;
+  cout << "Coordenadas iniciales en Y: " << coordenada_y << endl;
 
-  cout << "Las coordenadas insertadas para el eje X son: ";
-  cout << coordenada_x << endl;
-  cout << "Las coordenadas insertadas para el eje Y son: ";
-  cout << coordenada_y << endl;
+  //Coordenadas simuladas
+  double coordenadas_simuladas_x = coordenada_x;
+  double coordenadas_simuladas_y = coordenada_y;
+  double angulo_actual = 0;
 
+  movimientosASimular = curiosity.get_queue_de_comandos();
+
+  Comandos comando_a_simular;
+
+
+  cout << endl;
+
+  while (!movimientosASimular.empty())
+  {
+    comando_a_simular = movimientosASimular.front();
+    cout<< "comando "<<comando_a_simular.get_nombre_del_comando()<< " "<< "tipo de comando:"<<comando_a_simular.get_tipo()<<endl;
+
+    parametroDeMovimiento = comando_a_simular.get_parametros();
+    double bufferAngulo;
+    double bufferDistancia;
+    
+    if (comando_a_simular.get_tipo() == 'M')
+    {
+      if (comando_a_simular.get_nombre_del_comando().compare("avanzar") == 0)
+      {  
+        cout << "Se avanza..." << endl;
+
+        // 0 es para el numero, 1 es para la unidad de medida. 
+        cout << parametroDeMovimiento[0] << endl; 
+        cout << parametroDeMovimiento[1] << endl; 
+
+        bufferDistancia = stod(parametroDeMovimiento[0]);
+        cout << bufferAngulo << endl;
+        cout << bufferDistancia << endl;
+
+        coordenadas_simuladas_x += bufferDistancia * cos(angulo_actual);
+        coordenadas_simuladas_y += bufferDistancia * sin(angulo_actual);
+
+        cout << "Nueva localizacion: X " << coordenadas_simuladas_x << ", Y: " << coordenadas_simuladas_y << endl; 
+      }
+
+      if (comando_a_simular.get_nombre_del_comando().compare("girar") == 0)
+      {
+        if (parametroDeMovimiento[1].compare("grd") == 0)
+        {
+          bufferAngulo = stod(parametroDeMovimiento[0]);
+
+          bufferAngulo = bufferAngulo * M_PI / 180;
+          
+          angulo_actual += bufferAngulo;
+
+          cout << "Nuevo angulo" << angulo_actual << endl; 
+        }
+        else if (parametroDeMovimiento[1].compare("rad") == 0)
+        {
+          bufferAngulo = stod(parametroDeMovimiento[0]);
+
+          angulo_actual += bufferAngulo;
+
+          cout << "Nuevo angulo" << angulo_actual << endl; 
+        }
+      }
+       
+    }  
+    movimientosASimular.pop(); //este pop es para que el loop no sea infinito
+  }
+  
+/*
   // Actualizar (simular) coordenadas
-  coordenada_actual_x += coordenada_x;
+  coordenada_actual_x += coordenada_x; 
   coordenada_actual_y += coordenada_y;
+*/
 
-  cout << "Coordenadas actualizadas, el robot estaba en las coordenadas " << coordenada_inicial_x << ", " << coordenada_inicial_y << endl;
-  cout << "..." << endl;
-  cout << "El robot quedo en las coordenadas " << coordenada_actual_x << ", " << coordenada_actual_y << endl;
+
+  //double angulo = atan(coordenada_x / coordenada_y) * 180 / M_PI ;
+
+  // cout << "Coordenadas actualizadas, el robot estaba en las coordenadas " << coordenada_inicial_x << ", " << coordenada_inicial_y << endl;
+  // cout << "..." << endl;
+  // cout << "El robot quedo en las coordenadas " << coordenada_actual_x << ", " << coordenada_actual_y << endl;
+  // cout << "El angulo resultante fue de: " << angulo << endl;
 }
+
 
 void shell::enCuadrante(int x1, int x2, int y1, int y2)
 {
