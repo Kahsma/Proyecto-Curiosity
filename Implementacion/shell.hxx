@@ -437,9 +437,59 @@ void shell::cargarComandos(string nombre)
   lectura.close();
 }
 
+// Funcion de agregar elementos.
+void shell::agregarElemento(string tipoComp, string tamanio, string unidad, string cordx, string cordy)
+{
+  int tam = stoi(tamanio);
+  if (!(tipoComp.compare("roca") == 0 || tipoComp.compare("crater") == 0 || tipoComp.compare("monticulo") == 0 || tipoComp.compare("duna") == 0))
+  {
+    cout << "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)" << endl;
+    return;
+  }
+  if (tam <= 0)
+  {
+    cout << "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)" << endl;
+    return;
+  }
+  if (!(unidad.compare("cm") == 0 || unidad.compare("dm") == 0 || unidad.compare("m") == 0 || unidad.compare("km") == 0))
+  {
+    cout << "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)" << endl;
+    return;
+  }
+  char tipo = 'n';
+  if (tipoComp.compare("roca") == 0)
+  {
+    tipo = 'r';
+  }
+  else if (tipoComp.compare("crater") == 0)
+  {
+    tipo = 'c';
+  }
+  else if (tipoComp.compare("monticulo") == 0)
+  {
+    tipo = 'm';
+  }
+  else if (tipoComp.compare("duna") == 0)
+  {
+    tipo = 'd';
+  }
+  Elementos Ele;
+  Ele.setTipoElemento(tipo);
+  Ele.setTamanno(stoi(tamanio));
+  Ele.setUnidadMedida(unidad);
+  Ele.setCoordX(stof(cordx));
+  Ele.setCoordY(stof(cordy));
+  bool bien = curiosity.agregar_elemento(Ele);
+  if (bien)
+  {
+    cout << "El elemento ha sido agregado exitosamente." << endl;
+  }
+}
+
 // Funcion de cargar elementos.
 void shell::cargarElementos(string nombre)
 {
+
   string buffer;
   ifstream lectura;
   // nombre = "instrucciones.txt";
@@ -468,8 +518,55 @@ void shell::cargarElementos(string nombre)
     // Aqui van las intrucciones de lectura :)
     cout << "El archivo: " + nombre + " se abrio exitosamente" << endl;
   }
+  while (getline(lectura, buffer))
+  {
+    string partido[6];
+    char *ptr;
+    ptr = strtok(const_cast<char *>(buffer.c_str()), " ");
+    int i = 0;
+    partido[i] = ptr;
+    while (ptr != NULL)
+    {
+      // cout << *ptr<<endl;
+      i++;
+      ptr = strtok(NULL, " ");
+      // if(!partido[6].empty()){
+      //   cout<<"demasiados argumentos"<<endl;
+      //   break;
+      // }
+      if (ptr != NULL)
+      {
+        partido[i] = ptr;
+      }
+      // cout<<partido[i];
+    }
+    cout << endl;
+    cout << "el comando es " << endl;
+    for (int j = 0; j < i; j++)
+    {
+      cout << j << "-->" << partido[j];
+    }
+    if (partido[1].empty() || partido[2].empty() || partido[3].empty() || partido[4].empty() || partido[5].empty())
+    {
+      cout << "Ingrese todos los argumentos" << endl;
+    }
+    else
+    {
+      try
+      {
+        int tam = stoi(partido[2]);
+        int cordx = stoi(partido[4]);
+        int cordy = stoi(partido[5]);
+        agregarElemento(partido[1], partido[2], partido[3], partido[4], partido[5]);
+      }
+      catch (exception &err)
+      {
+        cout << "Conversion failure" << endl;
+      }
+    }
 
-  lectura.close();
+    lectura.close();
+  }
 }
 
 // Funcion de agregar movimiento.
@@ -552,55 +649,6 @@ void shell::agregarAnalisis(string tipo, string objteo, string comentario)
     cout << "El comando de análisis ha sido agregado exitosamente" << endl;
   }
   cout << tipo << objteo << comentario << endl;
-}
-
-// Funcion de agregar elementos.
-void shell::agregarElemento(string tipoComp, string tamanio, string unidad, string cordx, string cordy)
-{
-  int tam = stoi(tamanio);
-  if (!(tipoComp.compare("roca") == 0 || tipoComp.compare("crater") == 0 || tipoComp.compare("monticulo") == 0 || tipoComp.compare("duna") == 0))
-  {
-    cout << "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)" << endl;
-    return;
-  }
-  if (tam <= 0)
-  {
-    cout << "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)" << endl;
-    return;
-  }
-  if (!(unidad.compare("cm") == 0 || unidad.compare("dm") == 0 || unidad.compare("m") == 0 || unidad.compare("km") == 0))
-  {
-    cout << "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)" << endl;
-    return;
-  }
-  char tipo = 'n';
-  if (tipoComp.compare("roca") == 0)
-  {
-    tipo = 'r';
-  }
-  else if (tipoComp.compare("crater") == 0)
-  {
-    tipo = 'c';
-  }
-  else if (tipoComp.compare("monticulo") == 0)
-  {
-    tipo = 'm';
-  }
-  else if (tipoComp.compare("duna") == 0)
-  {
-    tipo = 'd';
-  }
-  Elementos Ele;
-  Ele.setTipoElemento(tipo);
-  Ele.setTamanno(stoi(tamanio));
-  Ele.setUnidadMedida(unidad);
-  Ele.setCoordX(stof(cordx));
-  Ele.setCoordY(stof(cordy));
-  bool bien = curiosity.agregar_elemento(Ele);
-  if (bien)
-  {
-    cout << "El elemento ha sido agregado exitosamente." << endl;
-  }
 }
 
 void shell::guardar(queue<string> cInstrucciones, string tipoA, string nomArchivo)
