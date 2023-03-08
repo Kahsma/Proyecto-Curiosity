@@ -212,7 +212,7 @@ void shell::verificarComandos(char comm[])
 
     while (true)
     {
-      cout << "Enter a string (or 's' to stop): ";
+      cout << "Escriba el comando o elemento (o 's' para terminar): ";
       getline(cin, elBuffer);
       if (elBuffer == "s")
       {

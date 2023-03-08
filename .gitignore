@@ -400,3 +400,5 @@ FodyWeavers.xsd
 
 replit.nix
 *.replit
+*.gch
+*.o
