@@ -1,8 +1,8 @@
-//Nombres : Alberto Vigna , Alejandro Salamanca ,Andres Salamanca , Camilo Martinez
-
+#ifndef _SHELL_H_
+#define _SHELL_H_
 #include <string>
 #include <iostream>
-
+//Nombres : Alberto Vigna , Alejandro Salamanca ,Andres Salamanca , Camilo Martinez
 using namespace std;
 
 class shell {
@@ -14,7 +14,7 @@ public:
   shell();
   shell(string commandd);
   
-  //Memomory Wipe
+  //Memory Wipe
   ~shell();
   
   //Functions (destructor)
@@ -35,3 +35,8 @@ public:
   void rutaMasLarga();
   void limpiar();
 };
+
+
+
+
+#endif

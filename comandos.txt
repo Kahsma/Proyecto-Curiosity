@@ -1,8 +1,0 @@
-//Compile 
-g++ -std=c++11 -c main.cpp shell.cxx
-
-//Linking 
-g++ -std=c++11 -o Main main.o shell.o
-
-//Execute
-./Main
