@@ -160,7 +160,7 @@ void shell::verificarComandos(char comm[])
 
     string tipoA;
 
-    cout << "Seleccione el tipo de archivo 1) Comandos 0) Elementos" << endl;
+    cout << "Seleccione el tipo de archivo 1) Comandos 2) Elementos" << endl;
 
     while (!parar2)
     {
@@ -210,22 +210,19 @@ void shell::verificarComandos(char comm[])
       cout << "Error guardando en " << partido[1] << endl;
     }
 
-    while (!parar)
+    while (true)
     {
-      cout << "Escriba la instruccion, para salir escriba: 's'" << endl;
-
-      // getline(cin, elBuffer);
-      cin >> elBuffer;
-      if (elBuffer != "s")
+      cout << "Enter a string (or 's' to stop): ";
+      getline(cin, elBuffer);
+      if (elBuffer == "s")
       {
-
-        cola.push(elBuffer);
+        break;
       }
-      else
-      {
-        parar = true;
-      }
+      cola.push(elBuffer);
     }
+
+    cout << cola.front() << endl;
+    cout << cola.back() << endl;
 
     guardar(cola, tipoA, partido[1]);
   }
