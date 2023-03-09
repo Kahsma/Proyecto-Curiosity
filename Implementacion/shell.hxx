@@ -160,7 +160,7 @@ void shell::verificarComandos(char comm[])
 
     string tipoA;
 
-    cout << "Seleccione el tipo de archivo 1) Comandos 2) Elementos" << endl;
+    cout << "Seleccione el tipo de archivo: Escriba (1) para Comandos o (2) para Elementos" << endl;
 
     while (!parar2)
     {
@@ -181,23 +181,10 @@ void shell::verificarComandos(char comm[])
         break;
 
       default:
-        cout << "Seleccione el tipo de archivo 1) Comandos 2) Elementos" << endl;
+        cout << "Seleccione el tipo de archivo: Escriba (1) para Comandos o (2) para Elementos" << endl;
 
         break;
       }
-
-      /*if (optionP != 0 || optionP != 1)
-      {
-
-      }
-      if (optionP == 1)
-      {
-
-      }
-      if (optionP == 0)
-      {
-
-      }*/
     }
 
     regex regex("(.*?)\\.(txt|csv|CSV|doc|DOC|pdf|PDF)$");
