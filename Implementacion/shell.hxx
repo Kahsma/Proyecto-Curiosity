@@ -695,7 +695,7 @@ void shell::simularComandos(int coordenada_x,int coordenada_y)
   while (!movimientosASimular.empty())
   {
     comando_a_simular = movimientosASimular.front();
-    cout<< "comando "<<comando_a_simular.get_nombre_del_comando()<< " "<< "tipo de comando:"<<comando_a_simular.get_tipo()<<endl;
+    cout << "Comando: " << comando_a_simular.get_nombre_del_comando()<< " " << "tipo de comando: " << comando_a_simular.get_tipo()<<endl;
 
     parametroDeMovimiento = comando_a_simular.get_parametros();
     double bufferAngulo;
@@ -708,12 +708,9 @@ void shell::simularComandos(int coordenada_x,int coordenada_y)
         cout << "Se avanza..." << endl;
 
         // 0 es para el numero, 1 es para la unidad de medida. 
-        cout << parametroDeMovimiento[0] << endl; 
-        cout << parametroDeMovimiento[1] << endl; 
 
         bufferDistancia = stod(parametroDeMovimiento[0]);
-        cout << bufferAngulo << endl;
-        cout << bufferDistancia << endl;
+    
 
         coordenadas_simuladas_x += bufferDistancia * cos(angulo_actual);
         coordenadas_simuladas_y += bufferDistancia * sin(angulo_actual);
