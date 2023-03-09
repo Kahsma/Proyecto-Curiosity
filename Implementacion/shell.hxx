@@ -37,13 +37,13 @@ void shell::help()
   cout << "-================================== Pediste ayuda? Tranquilo :) =================================-" << endl;
   cout << "-================================================================================================-" << endl;
   cout << "" << endl;
-  cout << "'cargar_comandos' es usado Para la carga en memoria los comandos de desplazamiento contenidos en  " << endl;
+  cout << "'cargar_comandos' es usado para la carga en memoria los comandos de desplazamiento contenidos en  " << endl;
   cout << "el archivo identificado por 'nombre_archivo1'." << endl;
   cout << "" << endl;
-  cout << "'cargar_elementos' es usado para Carga en memoria los datos de puntos de interés o elementos      " << endl;
+  cout << "'cargar_elementos' es usado para cargar en memoria los datos de puntos de interés o elementos      " << endl;
   cout << "contenidos en el archivo identificado por nombre_archivo." << endl;
   cout << "" << endl;
-  cout << "'agregar_movimiento' es usado para agrega el comando de movimiento descrito a la lista de comandos" << endl;
+  cout << "'agregar_movimientos' es usado para agrega el comando de movimiento descrito a la lista de comandos" << endl;
   cout << "del robot “Curiosity”. El movimiento puede ser de dos tipos: avanzar o girar." << endl;
   cout << "" << endl;
   cout << "'agregar_analisis' es usado para agregar el comando de análisis descrito a la lista de comandos   " << endl;
@@ -57,7 +57,8 @@ void shell::help()
   cout << "" << endl;
   cout << "'simular_comandos' es usado para Permite simular el resultado de los comandos de movimiento que se" << endl;
   cout << "enviarán al robot “Curiosity” desde la Tierra." << endl;
-  cout << "'salir' termina de ejecutar la aplicacion (como obvio no? jajaj)" << endl;
+  cout << "" << endl;
+  cout << "'salir' termina de ejecutar la aplicacion." << endl;
   cout << "-================================================================================================-" << endl;
 }
 
