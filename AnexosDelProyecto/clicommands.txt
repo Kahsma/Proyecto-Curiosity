@@ -1,6 +1,9 @@
+// Ir a Implementacion
+cd Implementacion
+
 //Compile 
-g++ -std=c++11 -c *.cpp 
 g++ -std=c++11 -c main.cpp
+
 //Linking 
 g++ -std=c++11 -o Main *.o
 g++ -std=c++11 -o Main  main.o
