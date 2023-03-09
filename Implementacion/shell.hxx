@@ -212,13 +212,14 @@ void shell::verificarComandos(char comm[])
 
     while (true)
     {
-      cout << "Escriba el comando o elemento (o 's' para terminar): ";
+
       getline(cin, elBuffer);
       if (elBuffer == "s")
       {
         break;
       }
       cola.push(elBuffer);
+      cout << "Escriba el comando o elemento (o 's' para terminar): ";
     }
 
     cout << cola.front() << endl;
@@ -437,13 +438,13 @@ void shell::cargarComandos(string nombre)
 // Funcion de agregar elementos.
 void shell::agregarElemento(string tipoComp, string tamanio, string unidad, string cordx, string cordy)
 {
-  int tam = stoi(tamanio);
+  float tam = stof(tamanio);
   if (!(tipoComp.compare("roca") == 0 || tipoComp.compare("crater") == 0 || tipoComp.compare("monticulo") == 0 || tipoComp.compare("duna") == 0))
   {
     cout << "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)" << endl;
     return;
   }
-  if (tam <= 0)
+  if (tam < 0)
   {
     cout << "La información del elemento no corresponde a los datos esperados (tipo,tamaño, unidad,x,y)" << endl;
     return;
@@ -483,7 +484,6 @@ void shell::agregarElemento(string tipoComp, string tamanio, string unidad, stri
   }
 }
 
-// Funcion de cargar elementos.
 void shell::cargarElementos(string nombre)
 {
 
@@ -538,12 +538,12 @@ void shell::cargarElementos(string nombre)
       // cout<<partido[i];
     }
     cout << endl;
-    cout << "el comando es " << endl;
+    // cout << "el comando es " << endl;
     for (int j = 0; j < i; j++)
     {
       cout << j << "-->" << partido[j];
     }
-    if (partido[1].empty() || partido[2].empty() || partido[3].empty() || partido[4].empty() || partido[5].empty())
+    if (partido[0].empty() || partido[1].empty() || partido[2].empty() || partido[3].empty() || partido[4].empty())
     {
       cout << "Ingrese todos los argumentos" << endl;
     }
@@ -551,19 +551,19 @@ void shell::cargarElementos(string nombre)
     {
       try
       {
-        int tam = stoi(partido[2]);
-        int cordx = stoi(partido[4]);
-        int cordy = stoi(partido[5]);
-        agregarElemento(partido[1], partido[2], partido[3], partido[4], partido[5]);
+        float tam = stof(partido[1]);
+        float cordx = stof(partido[3]);
+        float cordy = stof(partido[4]);
+        // cout<< partido[0] << endl;
+        agregarElemento(partido[0], partido[1], partido[2], partido[3], partido[4]);
       }
       catch (exception &err)
       {
         cout << "Conversion failure" << endl;
       }
     }
-
-    lectura.close();
   }
+  lectura.close();
 }
 
 // Funcion de agregar movimiento.
@@ -616,7 +616,7 @@ void shell::agregarMovimiento(string tipo, string magnitud, string unidad)
   cout << n_coman.get_tipo() << n_coman.get_nombre_del_comando() << endl;
   if (bien == true)
   {
-    cout << "El comando de análisis ha sido agregado exitosamente" << endl;
+    cout << "El comando de movimiento ha sido agregado exitosamente" << endl;
   }
 }
 
@@ -671,7 +671,7 @@ void shell::guardar(queue<string> cInstrucciones, string tipoA, string nomArchiv
   }
 }
 
-void shell::simularComandos(int coordenada_x,int coordenada_y)
+void shell::simularComandos(int coordenada_x, int coordenada_y)
 {
   queue<Comandos> movimientosASimular;
   vector<string> parametroDeMovimiento;
@@ -680,7 +680,7 @@ void shell::simularComandos(int coordenada_x,int coordenada_y)
   cout << "Coordenadas iniciales en X: " << coordenada_x << endl;
   cout << "Coordenadas iniciales en Y: " << coordenada_y << endl;
 
-  //Coordenadas simuladas
+  // Coordenadas simuladas
   double coordenadas_simuladas_x = coordenada_x;
   double coordenadas_simuladas_y = coordenada_y;
   double angulo_actual = 0;
@@ -688,7 +688,6 @@ void shell::simularComandos(int coordenada_x,int coordenada_y)
   movimientosASimular = curiosity.get_queue_de_comandos();
 
   Comandos comando_a_simular;
-
 
   cout << endl;
 
@@ -700,11 +699,11 @@ void shell::simularComandos(int coordenada_x,int coordenada_y)
     parametroDeMovimiento = comando_a_simular.get_parametros();
     double bufferAngulo;
     double bufferDistancia;
-    
+
     if (comando_a_simular.get_tipo() == 'M')
     {
       if (comando_a_simular.get_nombre_del_comando().compare("avanzar") == 0)
-      {  
+      {
         cout << "Se avanza..." << endl;
 
         // 0 es para el numero, 1 es para la unidad de medida. 
@@ -715,7 +714,7 @@ void shell::simularComandos(int coordenada_x,int coordenada_y)
         coordenadas_simuladas_x += bufferDistancia * cos(angulo_actual);
         coordenadas_simuladas_y += bufferDistancia * sin(angulo_actual);
 
-        cout << "Nueva localizacion: X " << coordenadas_simuladas_x << ", Y: " << coordenadas_simuladas_y << endl; 
+        cout << "Nueva localizacion: X " << coordenadas_simuladas_x << ", Y: " << coordenadas_simuladas_y << endl;
       }
 
       if (comando_a_simular.get_nombre_del_comando().compare("girar") == 0)
@@ -724,11 +723,11 @@ void shell::simularComandos(int coordenada_x,int coordenada_y)
         {
           bufferAngulo = stod(parametroDeMovimiento[0]);
 
-          bufferAngulo = bufferAngulo * M_PI / 180;
-          
+          bufferAngulo = bufferAngulo * 3.14159265358979323846 / 180;
+
           angulo_actual += bufferAngulo;
 
-          cout << "Nuevo angulo" << angulo_actual << endl; 
+          cout << "Nuevo angulo" << angulo_actual << endl;
         }
         else if (parametroDeMovimiento[1].compare("rad") == 0)
         {
@@ -736,29 +735,26 @@ void shell::simularComandos(int coordenada_x,int coordenada_y)
 
           angulo_actual += bufferAngulo;
 
-          cout << "Nuevo angulo" << angulo_actual << endl; 
+          cout << "Nuevo angulo" << angulo_actual << endl;
         }
       }
-       
-    }  
-    movimientosASimular.pop(); //este pop es para que el loop no sea infinito
+    }
+    movimientosASimular.pop(); // este pop es para que el loop no sea infinito
   }
-  
-/*
-  // Actualizar (simular) coordenadas
-  coordenada_actual_x += coordenada_x; 
-  coordenada_actual_y += coordenada_y;
-*/
 
+  /*
+    // Actualizar (simular) coordenadas
+    coordenada_actual_x += coordenada_x;
+    coordenada_actual_y += coordenada_y;
+  */
 
-  //double angulo = atan(coordenada_x / coordenada_y) * 180 / M_PI ;
+  // double angulo = atan(coordenada_x / coordenada_y) * 180 / M_PI ;
 
   // cout << "Coordenadas actualizadas, el robot estaba en las coordenadas " << coordenada_inicial_x << ", " << coordenada_inicial_y << endl;
   // cout << "..." << endl;
   // cout << "El robot quedo en las coordenadas " << coordenada_actual_x << ", " << coordenada_actual_y << endl;
   // cout << "El angulo resultante fue de: " << angulo << endl;
 }
-
 
 void shell::enCuadrante(int x1, int x2, int y1, int y2)
 {
