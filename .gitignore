@@ -402,3 +402,8 @@ replit.nix
 *.replit
 *.gch
 *.o
+
+.DS_Store
+*.exe
+*.o
+
