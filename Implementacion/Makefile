@@ -12,5 +12,8 @@ $(TARGET): $(OBJS)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+run: $(TARGET)
+	./$(TARGET)
+
 clean:
 	$(RM) $(OBJS) $(TARGET)
