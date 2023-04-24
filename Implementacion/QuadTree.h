@@ -1,7 +1,7 @@
 #ifndef __QUADTREE__H__
 #define __QUADTREE__H__
 #include "NodoQuadTree.h"
-#include "Elementos.cxx"
+#include "Elementos.h"
 class quadTree
 {
 protected:
@@ -10,7 +10,7 @@ public:
 quadTree();
 quadTree(Elementos val);
 ~quadTree();
-punto datoRaiz();
+Elementos datoRaiz();
 nodoQuad* obtenerRaiz();
 void fijarRaiz(nodoQuad* n_raiz);
 bool esVacio();

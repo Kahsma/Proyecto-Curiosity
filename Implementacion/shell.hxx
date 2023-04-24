@@ -14,7 +14,7 @@
 #include <cstring>
 #include <regex>
 #include <fstream> // archivos
-
+#include "QuadTree.h"
 using namespace std;
 
 Curiosity curiosity;

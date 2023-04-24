@@ -12,7 +12,7 @@ public:
 nodoQuad();
 nodoQuad(Elementos val);
 ~nodoQuad();
-punto obtenerDato();
+Elementos obtenerDato();
 void fijaDato(Elementos val);
 nodoQuad* obtenerHijoSupIzq();
 nodoQuad* obtenerHijoSupDer();

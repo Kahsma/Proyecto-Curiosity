@@ -4,6 +4,7 @@
 #include <list>
 #include"Comandos.h"
 #include"Elementos.h"
+#include "QuadTree.h"
 using namespace std;
 
 class Curiosity
@@ -11,6 +12,7 @@ class Curiosity
 private:
   queue<Comandos> ColaDeComandos;
   list<Elementos> listaDeElementos;
+  quadTree arbolElementos;
 public:
   // Constructor 
   Curiosity();
