@@ -1,6 +1,7 @@
 #include "QuadTree.h"
 #include <queue>
 #include <iostream>
+#include <list>
 // Default constructor
 quadTree::quadTree() : raiz(nullptr) {}
 
@@ -107,6 +108,33 @@ void quadTree::nivelOrden() {
   }
 }
 
+void quadTree::nivelOrdenCuadrante(float x1,float x2,float y1,float y2) {
+  if (raiz != nullptr) {
+    nivelOrdenCuadranteAux(raiz,x1,x2,y1,y2);
+    std::cout << std::endl;
+  }
+}
+void quadTree::nivelOrdenCuadranteAux(nodoQuad* nodo, float x1,float x2,float y1,float y2){
+    if (nodo != nullptr) {
+    std::queue<nodoQuad*> cola;
+    std::list <Elementos> eleCuadrante;
+    cola.push(nodo);
+    while (!cola.empty()) {
+      nodoQuad* actual = cola.front();
+      float xNodo = actual->obtenerDato().getCoordX();
+      float yNodo = actual->obtenerDato().getCoordY();
+      if(xNodo <= x2 && xNodo >= x1 && yNodo <= y2 && yNodo >= y1 ){
+        cout << "En cuadrante :" <<  actual->obtenerDato() << " " << endl;
+      }
+      cola.pop();
+      //std::cout << actual->obtenerDato() << " ";
+      if (actual->obtenerHijoSupIzq() != nullptr) cola.push(actual->obtenerHijoSupIzq());
+      if (actual->obtenerHijoSupDer() != nullptr) cola.push(actual->obtenerHijoSupDer());
+      if (actual->obtenerHijoInfIzq() != nullptr) cola.push(actual->obtenerHijoInfIzq());
+      if (actual->obtenerHijoInfDer() != nullptr) cola.push(actual->obtenerHijoInfDer());
+    }
+  }
+}
 
 // Helper functions for traversals
 void quadTree::inOrdenAux(nodoQuad* nodo) {
@@ -198,7 +226,7 @@ vector<Elementos>  quadTree::enCuadranteAux(nodoQuad* nodo,float x1,float x2,flo
     // std::cout << "supder"<<std::endl;
     vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoSupDer(),  x1, x2, y1, y2);
     // std::cout << "supder"<<std::endl;
-    results.insert(results.end(), childResults.begin(), childResults.end());
   }
+
   return results;
 }

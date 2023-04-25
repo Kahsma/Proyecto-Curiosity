@@ -749,6 +749,7 @@ void shell::enCuadrante(float x1,float x2,float y1,float y2)
   cout << "enCuadrante" << endl;
   //cout << "Los elementos ubicados en el cuadrante solicitado son: " << x1 << x2 << y1 << y2 << endl;
   curiosity.enCuadrante(x1,x2,y1,y2);
+  curiosity.NivelCuadrante(x1,x2,y1,y2);
 }
 
 void shell::salir()
