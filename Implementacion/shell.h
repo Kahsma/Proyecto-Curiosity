@@ -29,7 +29,7 @@ public:
   void agregarElemento(string tipoComp , string tamanio,string unidadMedida,string cordx,string cordy);
   void guardar(queue <string> lInstrucciones, string tipoA, string nomArchivo);
   void simularComandos(int x,int y);
-  void enCuadrante(int x1,int x2,int y1,int y2);
+  void enCuadrante(float x1,float x2,float y1,float y2);
   void salir();
   void ubicarElementos();
   void crearMapa();

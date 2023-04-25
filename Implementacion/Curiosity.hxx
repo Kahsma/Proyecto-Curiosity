@@ -82,3 +82,11 @@ bool Curiosity::borrar_elemento(Elementos elementos)
   bool resultado_borrar_elemento = false;
   return resultado_borrar_elemento;
 }
+void Curiosity::enCuadrante(float x1,float x2,float y1,float y2){
+
+  vector<Elementos> results = arbolElementos.enCuadrante(x1,x2,y1,y2);
+  for(auto ele : results){
+    std::cout << ele.getCoordX() << ","<< ele.getCoordY() <<std::endl;
+    std::cout << ele  <<std::endl;
+  }
+}

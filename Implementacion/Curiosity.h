@@ -5,6 +5,7 @@
 #include"Comandos.h"
 #include"Elementos.h"
 #include "QuadTree.h"
+#include <vector>
 using namespace std;
 
 class Curiosity
@@ -32,6 +33,8 @@ public:
 
   bool agregar_elemento (Elementos elementos);
   bool borrar_elemento (Elementos elementos);
+
+  void enCuadrante(float x1,float x2,float y1,float y2);
 };
 #include "Curiosity.hxx"
 #endif
