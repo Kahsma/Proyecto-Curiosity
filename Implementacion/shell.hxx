@@ -758,7 +758,30 @@ void shell::salir()
 
 void shell::ubicarElementos()
 {
-  cout << "Funcion Elementos" << endl;
+  bool ubicado = false;
+  vector<Elementos> elementosSinAgregar;
+  //cout << "entro a ubicar elementos"<< endl;
+  list <Elementos> listElementos;
+  listElementos = curiosity.get_lista_de_elementos();
+  if(listElementos.empty()){
+    cout << " La información requerida no está almacenada en memoria"<< endl;
+    return;
+  }
+  for (auto it = listElementos.begin(); it != listElementos.end();it ++){
+    ubicado=curiosity.agregar_elemento2(*it);
+    if(!ubicado){
+      elementosSinAgregar.push_back(*it);
+    }
+  }
+  if(!elementosSinAgregar.empty()){
+    for (auto it = elementosSinAgregar.begin(); it != elementosSinAgregar.end();it ++){
+      Elementos el = *it;
+      cout << " Los siguientes elementos no pudieron procesarse adecuadamente:" ;
+      cout << el.getTipoElemento() << el.getTamanno() << el.getCoordX() << el.getCoordY() << endl;
+    }
+  }
+  curiosity.imprimirarbolNivel();
+  cout << "Los elementos han sido procesados exitosamente." << endl;
 }
 
 void shell::crearMapa()

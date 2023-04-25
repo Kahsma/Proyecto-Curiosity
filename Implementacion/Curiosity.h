@@ -31,7 +31,10 @@ public:
   bool borrar_comando(Comandos comando);
 
   bool agregar_elemento (Elementos elementos);
+  bool agregar_elemento2(Elementos elementos);
   bool borrar_elemento (Elementos elementos);
+
+  void imprimirarbolNivel();
 };
 #include "Curiosity.hxx"
 #endif
