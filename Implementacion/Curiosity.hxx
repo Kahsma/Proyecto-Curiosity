@@ -50,30 +50,12 @@ bool Curiosity::borrar_comando(Comandos comando)
 }
 
 
-// Funciones elemento
-// bool Curiosity::agregar_elemento(Elementos elementos)
-// {
-//   bool resultado_agregar_elemento = false;
-//   listaDeElementos.push_back(elementos);
-//   resultado_agregar_elemento=true;
-//   return resultado_agregar_elemento;
-// }
-
-// bool Curiosity::borrar_elemento(Elementos elementos)
-// {
-//   bool resultado_borrar_elemento = false;
-//   return resultado_borrar_elemento;
-// }
-
+//Funciones elemento
 bool Curiosity::agregar_elemento(Elementos elementos)
 {
   bool resultado_agregar_elemento = false;
-  resultado_agregar_elemento = arbolElementos.insertar(elementos);
-  //resultado_agregar_elemento=true;
-  std::cout<<"\n";
-  arbolElementos.nivelOrden();
-  std::cout<<"\n";
-  arbolElementos.posOrden();
+  listaDeElementos.push_back(elementos);
+  resultado_agregar_elemento=true;
   return resultado_agregar_elemento;
 }
 
@@ -82,6 +64,7 @@ bool Curiosity::borrar_elemento(Elementos elementos)
   bool resultado_borrar_elemento = false;
   return resultado_borrar_elemento;
 }
+
 void Curiosity::enCuadrante(float x1,float x2,float y1,float y2){
 
   vector<Elementos> results = arbolElementos.enCuadrante(x1,x2,y1,y2);
@@ -89,4 +72,27 @@ void Curiosity::enCuadrante(float x1,float x2,float y1,float y2){
     std::cout << ele.getCoordX() << ","<< ele.getCoordY() <<std::endl;
     std::cout << ele  <<std::endl;
   }
+
+}
+
+bool Curiosity::agregar_elemento2(Elementos elementos)
+{
+  bool resultado_agregar_elemento = false;
+  resultado_agregar_elemento = arbolElementos.insertar(elementos);
+  //resultado_agregar_elemento=true;
+  //std::cout<<"\n";
+  //arbolElementos.nivelOrden();
+  //std::cout<<"\n";
+  //arbolElementos.posOrden();
+  return resultado_agregar_elemento;
+}
+
+// bool Curiosity::borrar_elemento(Elementos elementos)
+// {
+//   bool resultado_borrar_elemento = false;
+//   return resultado_borrar_elemento;
+// }
+void Curiosity::imprimirarbolNivel(){
+  arbolElementos.nivelOrden();
+
 }

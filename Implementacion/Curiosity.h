@@ -32,9 +32,11 @@ public:
   bool borrar_comando(Comandos comando);
 
   bool agregar_elemento (Elementos elementos);
+  bool agregar_elemento2(Elementos elementos);
   bool borrar_elemento (Elementos elementos);
-
   void enCuadrante(float x1,float x2,float y1,float y2);
+  void imprimirarbolNivel();
+
 };
 #include "Curiosity.hxx"
 #endif
