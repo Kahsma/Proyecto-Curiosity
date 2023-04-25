@@ -36,6 +36,7 @@ public:
   bool borrar_elemento (Elementos elementos);
   void enCuadrante(float x1,float x2,float y1,float y2);
   void imprimirarbolNivel();
+  void NivelCuadrante(float x1,float x2,float y1,float y2);
 
 };
 #include "Curiosity.hxx"

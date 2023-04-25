@@ -26,6 +26,8 @@ void nivelOrden();
 void nivelOrdenAux(nodoQuad* nodo);
 vector<Elementos>  enCuadrante(float x1,float x2,float y1,float y2);
 vector<Elementos>  enCuadranteAux(nodoQuad* nodo,float x1,float x2,float y1,float y2);
+void nivelOrdenCuadrante(float x1,float x2,float y1,float y2);
+void nivelOrdenCuadranteAux(nodoQuad* nodo, float x1,float x2,float y1,float y2);
 };
 #include "QuadTree.cxx"
 
