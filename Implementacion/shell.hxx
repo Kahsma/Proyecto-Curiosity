@@ -14,7 +14,7 @@
 #include <cstring>
 #include <regex>
 #include <fstream> // archivos
-
+#include "QuadTree.h"
 using namespace std;
 
 Curiosity curiosity;
@@ -237,19 +237,25 @@ void shell::verificarComandos(char comm[])
   }
   else if (partido[0].compare("en_cuadrante") == 0)
   {
-    if (partido[4].empty())
+    if (partido[4].empty() && partido[1].empty() &&  partido[2].empty() && partido[3].empty() )
     {
-      cout << "Los elementos no han sido ubicados todavía" << endl;
+      cout << " La informacion del cuadrante no corresponde a los datos esperados (x_min,x_max, y_min, y_max)." << endl;
     }
     else
     {
       try
       {
-        int corx1 = stoi(partido[1]);
-        int corx2 = stoi(partido[2]);
-        int cory1 = stoi(partido[3]);
-        int cory2 = stoi(partido[4]);
-        enCuadrante(corx1, corx2, cory1, cory2);
+        float corx1 = stof(partido[1]);
+        float corx2 = stof(partido[2]);
+        float cory1 = stof(partido[3]);
+        float cory2 = stof(partido[4]);
+        if (corx1 > corx2 || cory1 > cory2){
+          cout << " La información del cuadrante no corresponde a los datos esperados (x_min,x_max, y_min, y_max)." << endl;
+        }
+        else{
+          enCuadrante(corx1, corx2, cory1, cory2);
+        }
+        
       }
       catch (exception &err)
       {
@@ -286,7 +292,7 @@ void shell::iniciarShell()
   limpiar();
   cout << "Cargando, por favor espere..." << endl;
   cout << '-' << flush;
-  for (int i = 0; i < 1; i++)
+  for (int i = 0; i < 0; i++)
   {
     std::cout << "\b\b\b\b\b\b\b\b\b\bLoading   " << std::flush;
     sleep(1);
@@ -744,10 +750,15 @@ void shell::simularComandos(int coordenada_x, int coordenada_y)
   // cout << "El angulo resultante fue de: " << angulo << endl;
 }
 
-void shell::enCuadrante(int x1, int x2, int y1, int y2)
+void shell::enCuadrante(float x1,float x2,float y1,float y2)
 {
   cout << "enCuadrante" << endl;
-  cout << "Los elementos ubicados en el cuadrante solicitado son: " << x1 << x2 << y1 << y2 << endl;
+  //cout << "Los elementos ubicados en el cuadrante solicitado son: " << x1 << x2 << y1 << y2 << endl;
+  curiosity.enCuadrante(x1,x2,y1,y2);
+  bool ubicado = curiosity.NivelCuadrante(x1,x2,y1,y2);
+  if (!ubicado){
+    cout << " Los elementos no han sido ubicados todavia (con el comando ubicar_elementos)" << endl;
+  }
 }
 
 void shell::salir()
@@ -758,7 +769,30 @@ void shell::salir()
 
 void shell::ubicarElementos()
 {
-  cout << "Funcion Elementos" << endl;
+  bool ubicado = false;
+  vector<Elementos> elementosSinAgregar;
+  //cout << "entro a ubicar elementos"<< endl;
+  list <Elementos> listElementos;
+  listElementos = curiosity.get_lista_de_elementos();
+  if(listElementos.empty()){
+    cout << " La información requerida no está almacenada en memoria"<< endl;
+    return;
+  }
+  for (auto it = listElementos.begin(); it != listElementos.end();it ++){
+    ubicado=curiosity.agregar_elemento2(*it);
+    if(!ubicado){
+      elementosSinAgregar.push_back(*it);
+    }
+  }
+  if(!elementosSinAgregar.empty()){
+    for (auto it = elementosSinAgregar.begin(); it != elementosSinAgregar.end();it ++){
+      Elementos el = *it;
+      cout << " Los siguientes elementos no pudieron procesarse adecuadamente:" ;
+      cout << el.getTipoElemento() << el.getTamanno() << el.getCoordX() << el.getCoordY() << endl;
+    }
+  }
+  curiosity.imprimirarbolNivel();
+  cout << "Los elementos han sido procesados exitosamente." << endl;
 }
 
 void shell::crearMapa()

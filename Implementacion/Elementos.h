@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 class Elementos{
-private:
+protected:
   char tipoElemento;
   unsigned long tamanno;
   string UnidadMedida;
@@ -23,6 +23,18 @@ public:
   string getUnidadMedida();
   void setUnidadMedida(string unidad);
   ~Elementos();
+  Elementos& operator = (const Elementos &p ){
+  coordX = p.coordX;
+  coordY = p.coordY;
+  return *this;
+  }
+  bool operator == (const Elementos &p) const{
+  return (coordX == p.coordX && coordY == p.coordY);
+  }
+  friend std::ostream& operator<<(std::ostream& o, const Elementos& p) {
+  o << "(" << p.getCoordX() << "," << p.getCoordY() << ")";
+  return o;
+  }
 };
 #include "Elementos.hxx"
 
