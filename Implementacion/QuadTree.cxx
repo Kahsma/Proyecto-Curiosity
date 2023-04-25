@@ -226,7 +226,7 @@ vector<Elementos>  quadTree::enCuadranteAux(nodoQuad* nodo,float x1,float x2,flo
     // std::cout << "supder"<<std::endl;
     vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoSupDer(),  x1, x2, y1, y2);
     // std::cout << "supder"<<std::endl;
+    results.insert(results.end(), childResults.begin(), childResults.end());
   }
-
   return results;
 }
