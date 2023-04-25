@@ -69,7 +69,6 @@ void Curiosity::enCuadrante(float x1,float x2,float y1,float y2){
 
   vector<Elementos> results = arbolElementos.enCuadrante(x1,x2,y1,y2);
   for(auto ele : results){
-    std::cout << ele.getCoordX() << ","<< ele.getCoordY() <<std::endl;
     std::cout << ele  <<std::endl;
   }
 

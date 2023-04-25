@@ -168,23 +168,36 @@ vector<Elementos>  quadTree::enCuadranteAux(nodoQuad* nodo,float x1,float x2,flo
   vector<Elementos> results;
   float x = nodo->obtenerDato().getCoordX();
   float y = nodo->obtenerDato().getCoordY();
+  // std::cout<< nodo->obtenerDato() <<std::endl;
+  // std::cout << nodo->obtenerDato().getCoordX() << ","<< nodo->obtenerDato().getCoordY() <<std::endl;
+  // std::cout << x1<<x2<<y1<<y2<<std::endl;
   if (x >= x1 && x <= x2 && y >= y1 && y <= y2) {
     results.push_back(nodo->obtenerDato());
   }
-  if (nodo->obtenerHijoSupIzq() != nullptr && x1 <= x && y1 <= y) {
-    vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoSupIzq(), x1, y1, x2, y2);
+  if (nodo->obtenerHijoInfIzq() != nullptr && x1 <= x && y1 <= y) {
+    // std::cout << "infiz"<<std::endl;
+    vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoInfIzq(), x1, x2, y1, y2);
+
+    results.insert(results.end(), childResults.begin(), childResults.end());
+// std::cout << "infiz"<<std::endl;
+  }
+  if (nodo->obtenerHijoInfDer() != nullptr && x <= x2 && y1 <= y) {
+    // std::cout << "ifder"<<std::endl;
+    vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoInfDer(),  x1, x2, y1, y2);
+
+    results.insert(results.end(), childResults.begin(), childResults.end());
+    // std::cout << "infder"<<std::endl;
+  }
+  if (nodo->obtenerHijoSupIzq() != nullptr && x1 <= x && y <= y2 ) {
+    // std::cout << "supqiz"<<std::endl;
+    vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoSupIzq(),  x1, x2, y1, y2);
+    // std::cout << "supqiz"<<std::endl;
     results.insert(results.end(), childResults.begin(), childResults.end());
   }
-  if (nodo->obtenerHijoSupDer() != nullptr && x <= x2 && y1 <= y) {
-    vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoSupDer(), x1, y1, x2, y2);
-    results.insert(results.end(), childResults.begin(), childResults.end());
-  }
-  if (nodo->obtenerHijoInfIzq() != nullptr && x1 <= x && y <= y2) {
-    vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoInfIzq(), x1, y1, x2, y2);
-    results.insert(results.end(), childResults.begin(), childResults.end());
-  }
-  if (nodo->obtenerHijoInfDer() != nullptr && x <= x2 && y <= y2) {
-    vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoInfDer(), x1, y1, x2, y2);
+  if (nodo->obtenerHijoSupDer() != nullptr && x <= x2 && y <= y2) {
+    // std::cout << "supder"<<std::endl;
+    vector<Elementos> childResults = enCuadranteAux(nodo->obtenerHijoSupDer(),  x1, x2, y1, y2);
+    // std::cout << "supder"<<std::endl;
     results.insert(results.end(), childResults.begin(), childResults.end());
   }
   return results;
