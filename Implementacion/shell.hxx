@@ -259,7 +259,7 @@ void shell::verificarComandos(char comm[])
       }
       catch (exception &err)
       {
-        cout << "Conversion failure" << endl;
+        cout << " La información del cuadrante no corresponde a los datos esperados (x_min,x_max, y_min, y_max)." << endl;
       }
     }
   }
