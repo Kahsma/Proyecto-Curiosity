@@ -572,7 +572,7 @@ public:
 
 std::vector<std::vector<int>> laSuperFuncion() {
     int A = aristas.size();
-    std::vector<std::vector<int>> modifiedGraph = aristas;
+    std::vector<std::vector<U>> modifiedGraph = aristas;
 
     // Modificar la matriz original
     for (int i = 0; i < A; i++) {
@@ -592,14 +592,14 @@ std::vector<std::vector<int>> laSuperFuncion() {
 
     // std::cout << "Campos:" << modifiedGraph.size() * modifiedGraph.size() << std::endl;
 
-    std::vector<std::vector<int>> matrizBase = modifiedGraph;
+    std::vector<std::vector<U>> matrizBase = modifiedGraph;
     int campos = modifiedGraph.size();
     bool termino = false;
     // std::cout << "Matriz base:" << std::endl;
     // printMatrix(matrizBase);
 
     while (!termino) {
-        std::vector<std::vector<int>> resultado(campos, std::vector<int>(campos, 0));
+        std::vector<std::vector<U>> resultado(campos, std::vector<U>(campos, 0));
 
         for (int i = 0; i < campos; i++) {
             for (int j = 0; j < campos; j++) {

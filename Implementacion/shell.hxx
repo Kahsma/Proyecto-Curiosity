@@ -803,6 +803,10 @@ void shell::crearMapa()
 void shell::rutaMasLarga()
 {
   cout << "Funcion ruta Mas Larga" << endl;
+  grafo.
+  
+
+
 }
 void shell::limpiar()
 {
