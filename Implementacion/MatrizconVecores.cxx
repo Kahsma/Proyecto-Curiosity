@@ -5,6 +5,12 @@
 #include <list>
 #include <limits>
 
+
+//TODO Borrar Despues
+
+// #include <chrono>
+// #include <thread>
+
 template <class T, class U>
 class Grafo {
 private:
@@ -564,5 +570,124 @@ public:
         return mst;
     }
 
+std::vector<std::vector<int>> laSuperFuncion() {
+    int A = aristas.size();
+    std::vector<std::vector<int>> modifiedGraph = aristas;
+
+    // Modificar la matriz original
+    for (int i = 0; i < A; i++) {
+        for (int j = 0; j < A; j++) {
+            int weight = aristas[i][j];
+
+            // Verificar si el peso es mayor que cero
+            if (weight > 0) {
+                // Cambiar el valor del peso a 1
+                modifiedGraph[i][j] = 1;
+            }
+        }
+    }
+
+    // std::cout << "Matriz modificada:" << std::endl;
+    // printMatrix(modifiedGraph);
+
+    // std::cout << "Campos:" << modifiedGraph.size() * modifiedGraph.size() << std::endl;
+
+    std::vector<std::vector<int>> matrizBase = modifiedGraph;
+    int campos = modifiedGraph.size();
+    bool termino = false;
+    // std::cout << "Matriz base:" << std::endl;
+    // printMatrix(matrizBase);
+
+    while (!termino) {
+        std::vector<std::vector<int>> resultado(campos, std::vector<int>(campos, 0));
+
+        for (int i = 0; i < campos; i++) {
+            for (int j = 0; j < campos; j++) {
+                for (int k = 0; k < campos; k++) {
+                    resultado[i][j] += modifiedGraph[i][k] * matrizBase[k][j];
+                }
+            }
+        }
+
+        // Verificar si la matriz resultante es de ceros
+        bool esMatrizCero = true;
+        for (int i = 0; i < campos; i++) {
+            for (int j = 0; j < campos; j++) {
+                if (resultado[i][j] != 0) {
+                    esMatrizCero = false;
+                    break;
+                }
+            }
+            if (!esMatrizCero) {
+                break;
+            }
+        }
+
+        if (esMatrizCero) {
+            termino = true;
+        } else {
+            modifiedGraph = resultado;
+            // std::cout << "Matriz Multiplicada:" << std::endl;
+            // printMatrix(modifiedGraph);
+
+            // Pausa de 2 segundos
+            //std::this_thread::sleep_for(std::chrono::seconds(2));
+        }
+    }
+
+    std::cout << "Fin del programa, la ultima iteracion de la matriz es: " << std::endl;
+
+    printMatrix(modifiedGraph);
+
+
+    return modifiedGraph;
+}
+
+
+    private :void printMatrix(const std::vector<std::vector<int>>& matrix) {
+        int n = matrix.size();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                std::cout << matrix[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
+
    
 };
+
+
+// int main() {
+//     Grafo<char, int> grafo;
+
+//     // Crear vértices
+//     std::vector<char> vertices = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
+//     grafo.setVertices(vertices);
+
+//     // // Insertar aristas
+//     // grafo.insertarArista('A', 'B', 2);
+//     // grafo.insertarArista('A', 'C', 4);
+//     // grafo.insertarArista('B', 'C', 1);
+//     // grafo.insertarArista('B', 'D', 7);
+//     // grafo.insertarArista('C', 'D', 3);
+//     // grafo.insertarArista('C', 'E', 5);
+//     // grafo.insertarArista('D', 'E', 6);
+//     // grafo.insertarArista('E', 'F', 8);
+//     // grafo.insertarArista('E', 'G', 9);
+
+//     // Insertar aristas
+//     grafo.insertarArista('A', 'B', 2);
+//     grafo.insertarArista('A', 'C', 4);
+//     grafo.insertarArista('B', 'D', 1);
+//     grafo.insertarArista('C', 'E', 3);
+//     grafo.insertarArista('D', 'F', 7);
+//     grafo.insertarArista('E', 'F', 5);
+//     grafo.insertarArista('E', 'G', 6);
+
+//     std::vector<std::vector<int> > laMatriz = grafo.laSuperFuncion();
+
+    
+
+//     return 0;
+// }
