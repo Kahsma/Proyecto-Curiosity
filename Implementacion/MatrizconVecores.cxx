@@ -8,8 +8,8 @@
 
 //TODO Borrar Despues
 
-// #include <chrono>
-// #include <thread>
+#include <chrono>
+#include <thread>
 
 template <class T, class U>
 class Grafo {
@@ -570,9 +570,9 @@ public:
         return mst;
     }
 
-std::vector<std::vector<int>> laSuperFuncion() {
+std::vector<std::vector<U>> laSuperFuncion() {
     int A = aristas.size();
-    std::vector<std::vector<int>> modifiedGraph = aristas;
+    std::vector<std::vector<U>> modifiedGraph = aristas;
 
     // Modificar la matriz original
     for (int i = 0; i < A; i++) {
@@ -587,19 +587,19 @@ std::vector<std::vector<int>> laSuperFuncion() {
         }
     }
 
-    // std::cout << "Matriz modificada:" << std::endl;
-    // printMatrix(modifiedGraph);
+    std::cout << "Matriz modificada:" << std::endl;
+    printMatrix(modifiedGraph);
 
-    // std::cout << "Campos:" << modifiedGraph.size() * modifiedGraph.size() << std::endl;
+    std::cout << "Campos:" << modifiedGraph.size() * modifiedGraph.size() << std::endl;
 
-    std::vector<std::vector<int>> matrizBase = modifiedGraph;
+    std::vector<std::vector<U>> matrizBase = modifiedGraph;
     int campos = modifiedGraph.size();
     bool termino = false;
-    // std::cout << "Matriz base:" << std::endl;
-    // printMatrix(matrizBase);
+    std::cout << "Matriz base:" << std::endl;
+    printMatrix(matrizBase);
 
     while (!termino) {
-        std::vector<std::vector<int>> resultado(campos, std::vector<int>(campos, 0));
+        std::vector<std::vector<U>> resultado(campos, std::vector<U>(campos, 0));
 
         for (int i = 0; i < campos; i++) {
             for (int j = 0; j < campos; j++) {
@@ -609,7 +609,7 @@ std::vector<std::vector<int>> laSuperFuncion() {
             }
         }
 
-        // Verificar si la matriz resultante es de ceros
+       // Verificar si la matriz resultante es de ceros
         bool esMatrizCero = true;
         for (int i = 0; i < campos; i++) {
             for (int j = 0; j < campos; j++) {
@@ -627,11 +627,11 @@ std::vector<std::vector<int>> laSuperFuncion() {
             termino = true;
         } else {
             modifiedGraph = resultado;
-            // std::cout << "Matriz Multiplicada:" << std::endl;
-            // printMatrix(modifiedGraph);
+            std::cout << "Matriz Multiplicada:" << std::endl;
+            printMatrix(modifiedGraph);
 
-            // Pausa de 2 segundos
-            //std::this_thread::sleep_for(std::chrono::seconds(2));
+            //Pausa de 2 segundos
+            std::this_thread::sleep_for(std::chrono::seconds(2));
         }
     }
 
@@ -644,7 +644,7 @@ std::vector<std::vector<int>> laSuperFuncion() {
 }
 
 
-    void printMatrix(const std::vector<std::vector<int>>& matrix) {
+    void printMatrix(const std::vector<std::vector<U>>& matrix) {
         int n = matrix.size();
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -667,36 +667,36 @@ std::vector<std::vector<int>> laSuperFuncion() {
 };
 
 
-// int main() {
-//     Grafo<char, int> grafo;
+int main() {
+    Grafo<char, int> grafo;
 
-//     // Crear vértices
-//     std::vector<char> vertices = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-//     grafo.setVertices(vertices);
+    // Crear vértices
+    std::vector<char> vertices = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
+    grafo.setVertices(vertices);
 
-//     // // Insertar aristas
-//     // grafo.insertarArista('A', 'B', 2);
-//     // grafo.insertarArista('A', 'C', 4);
-//     // grafo.insertarArista('B', 'C', 1);
-//     // grafo.insertarArista('B', 'D', 7);
-//     // grafo.insertarArista('C', 'D', 3);
-//     // grafo.insertarArista('C', 'E', 5);
-//     // grafo.insertarArista('D', 'E', 6);
-//     // grafo.insertarArista('E', 'F', 8);
-//     // grafo.insertarArista('E', 'G', 9);
+    // // Insertar aristas
+    // grafo.insertarArista('A', 'B', 2);
+    // grafo.insertarArista('A', 'C', 4);
+    // grafo.insertarArista('B', 'C', 1);
+    // grafo.insertarArista('B', 'D', 7);
+    // grafo.insertarArista('C', 'D', 3);
+    // grafo.insertarArista('C', 'E', 5);
+    // grafo.insertarArista('D', 'E', 6);
+    // grafo.insertarArista('E', 'F', 8);
+    // grafo.insertarArista('E', 'G', 9);
 
-//     // Insertar aristas
-//     grafo.insertarArista('A', 'B', 2);
-//     grafo.insertarArista('A', 'C', 4);
-//     grafo.insertarArista('B', 'D', 1);
-//     grafo.insertarArista('C', 'E', 3);
-//     grafo.insertarArista('D', 'F', 7);
-//     grafo.insertarArista('E', 'F', 5);
-//     grafo.insertarArista('E', 'G', 6);
+    // Insertar aristas
+    grafo.insertarArista('A', 'B', 2);
+    grafo.insertarArista('A', 'C', 4);
+    grafo.insertarArista('B', 'D', 1);
+    grafo.insertarArista('C', 'E', 3);
+    grafo.insertarArista('D', 'F', 7);
+    grafo.insertarArista('E', 'F', 5);
+    grafo.insertarArista('E', 'G', 6);
 
-//     std::vector<std::vector<int> > laMatriz = grafo.laSuperFuncion();
+    std::vector<std::vector<int> > laMatriz = grafo.laSuperFuncion();
 
     
 
-//     return 0;
-// }
+    return 0;
+}
