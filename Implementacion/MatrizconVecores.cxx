@@ -644,7 +644,7 @@ std::vector<std::vector<int>> laSuperFuncion() {
 }
 
 
-    private :void printMatrix(const std::vector<std::vector<int>>& matrix) {
+    void printMatrix(const std::vector<std::vector<int>>& matrix) {
         int n = matrix.size();
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -652,6 +652,15 @@ std::vector<std::vector<int>> laSuperFuncion() {
             }
             std::cout << std::endl;
         }
+    }
+
+    void imprimirMatriz() const {
+      for (const auto& row : aristas) {
+        for (const auto& val : row) {
+            std::cout << val << " ";
+        }
+        std::cout << std::endl;
+      }
     }
 
    

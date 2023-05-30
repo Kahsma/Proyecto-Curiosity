@@ -21,7 +21,7 @@ using namespace std;
 
 Curiosity curiosity;
 
-//Grafo<string, float> grafo;
+Grafo<string, float> grafo;
 
 shell::shell()
 {
@@ -306,7 +306,7 @@ void shell::iniciarShell()
   limpiar();
   cout << "Cargando, por favor espere..." << endl;
   cout << '-' << flush;
-  for (int i = 0; i < 1; i++)
+  for (int i = 0; i < 0; i++)
   {
     std::cout << "\b\b\b\b\b\b\b\b\b\bLoading   " << std::flush;
     sleep(1);
@@ -763,6 +763,7 @@ void shell::simularComandos(int coordenada_x, int coordenada_y)
   // cout << "El robot quedo en las coordenadas " << coordenada_actual_x << ", " << coordenada_actual_y << endl;
   // cout << "El angulo resultante fue de: " << angulo << endl;
 }
+
 float calculateDistance(Elementos ele1 , Elementos ele2) {
     float dx = ele2.getCoordX() - ele1.getCoordX();
     float dy = ele2.getCoordY() - ele1.getCoordY();
@@ -813,34 +814,48 @@ void shell::ubicarElementos()
   }
   curiosity.imprimirarbolNivel();
   cout << "Los elementos han sido procesados exitosamente." << endl;
+
+
 }
 
 void shell::crearMapa(float coeficiente)
 {
   cout << "Funcion crear Mapa" << endl;
   std::list<Elementos> elementos = curiosity.get_lista_de_elementos();
-  std::list<string> elenombre;
+  std::list<std::string> elenombre;
 
   float Numvecinos = elementos.size() * coeficiente;
   int contador =0;
 cout << "holaaaa" << endl;
   for(const auto ele : elementos){
-    string anadir = ele.getTipoElemento() + "_" + to_string(contador);
-    //grafo.insertarVertice(anadir);
+    string anadir = string(1, ele.getTipoElemento()) + "_" + to_string(contador);
+    grafo.insertarVertice(anadir);
     contador++;
     elenombre.push_back(anadir);
 
   }
 
-for(auto nom : elenombre){
-cout << nom << endl;
-}
-  // std::list<string>::iterator itnombre = elenombre.begin();
-  // std::list<string>::iterator itnombrellegada = elenombre.begin();
+  for(auto nom : elenombre){
+  cout << nom << endl;
+  }
+  std::list<string>::iterator itnombre = elenombre.begin();
+  std::list<string>::iterator itnombrellegada = elenombre.begin();
+
+  for(auto ituno = elementos.begin();ituno !=elementos.end();ituno++){
+
+    for(auto itdos = elementos.begin();itdos !=elementos.end();itdos++){
+
+      grafo.insertarArista(*itnombre,*itnombrellegada,calculateDistance(*ituno,*itdos));
+      itnombrellegada++;
+      
+    }
+    itnombrellegada = elenombre.begin();
+    itnombre++;
+  }
 
   //   cout << "holaaaa2" << endl;
 
-  // grafo.imprimirMatriz();
+  grafo.imprimirMatriz();
 
 }
 
