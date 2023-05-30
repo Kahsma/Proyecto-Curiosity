@@ -15,9 +15,13 @@
 #include <regex>
 #include <fstream> // archivos
 #include "QuadTree.h"
+#include "MatrizconVecores.cxx"
+#include <list>
 using namespace std;
 
 Curiosity curiosity;
+
+Grafo<string, float> grafo;
 
 shell::shell()
 {
@@ -273,7 +277,17 @@ void shell::verificarComandos(char comm[])
   }
   else if (partido[0].compare("crear_mapa") == 0)
   {
-    crearMapa();
+    try
+    {
+      float coeficiente = std::stof(partido[1]);
+      crearMapa(coeficiente);
+    }
+    catch(const std::exception& e)
+    {
+      std::cerr << e.what() << '\n';
+    }
+    
+
   }
   else if (partido[0].compare("ruta_mas_larga") == 0)
   {
@@ -292,7 +306,7 @@ void shell::iniciarShell()
   limpiar();
   cout << "Cargando, por favor espere..." << endl;
   cout << '-' << flush;
-  for (int i = 0; i < 1; i++)
+  for (int i = 0; i < 0; i++)
   {
     std::cout << "\b\b\b\b\b\b\b\b\b\bLoading   " << std::flush;
     sleep(1);
@@ -750,6 +764,13 @@ void shell::simularComandos(int coordenada_x, int coordenada_y)
   // cout << "El angulo resultante fue de: " << angulo << endl;
 }
 
+float calculateDistance(Elementos ele1 , Elementos ele2) {
+    float dx = ele2.getCoordX() - ele1.getCoordX();
+    float dy = ele2.getCoordY() - ele1.getCoordY();
+    return std::sqrt(dx * dx + dy * dy);
+}
+
+
 void shell::enCuadrante(float x1,float x2,float y1,float y2)
 {
   cout << "enCuadrante" << endl;
@@ -793,11 +814,49 @@ void shell::ubicarElementos()
   }
   curiosity.imprimirarbolNivel();
   cout << "Los elementos han sido procesados exitosamente." << endl;
+
+
 }
 
-void shell::crearMapa()
+void shell::crearMapa(float coeficiente)
 {
   cout << "Funcion crear Mapa" << endl;
+  std::list<Elementos> elementos = curiosity.get_lista_de_elementos();
+  std::list<std::string> elenombre;
+
+  float Numvecinos = elementos.size() * coeficiente;
+  int contador =0;
+cout << "holaaaa" << endl;
+  for(const auto ele : elementos){
+    string anadir = string(1, ele.getTipoElemento()) + "_" + to_string(contador);
+    grafo.insertarVertice(anadir);
+    contador++;
+    elenombre.push_back(anadir);
+
+  }
+
+  for(auto nom : elenombre){
+  cout << nom << endl;
+  }
+  std::list<string>::iterator itnombre = elenombre.begin();
+  std::list<string>::iterator itnombrellegada = elenombre.begin();
+
+  for(auto ituno = elementos.begin();ituno !=elementos.end();ituno++){
+
+    for(auto itdos = elementos.begin();itdos !=elementos.end();itdos++){
+
+      grafo.insertarArista(*itnombre,*itnombrellegada,calculateDistance(*ituno,*itdos));
+      itnombrellegada++;
+      
+    }
+    itnombrellegada = elenombre.begin();
+    itnombre++;
+  }
+
+  //   cout << "holaaaa2" << endl;
+
+  grafo.imprimirMatriz();
+
 }
 
 void shell::rutaMasLarga()
@@ -839,3 +898,5 @@ void shell::limpiar()
   printf("Unidentified OS\n");
 #endif
 }
+
+
