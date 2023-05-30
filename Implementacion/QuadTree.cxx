@@ -108,11 +108,15 @@ void quadTree::nivelOrden() {
   }
 }
 
-void quadTree::nivelOrdenCuadrante(float x1,float x2,float y1,float y2) {
+bool quadTree::nivelOrdenCuadrante(float x1,float x2,float y1,float y2) {
   if (raiz != nullptr) {
     nivelOrdenCuadranteAux(raiz,x1,x2,y1,y2);
     std::cout << std::endl;
   }
+  else {
+    return false;
+  }
+  return true;
 }
 void quadTree::nivelOrdenCuadranteAux(nodoQuad* nodo, float x1,float x2,float y1,float y2){
     if (nodo != nullptr) {
