@@ -17,6 +17,7 @@
 #include "QuadTree.h"
 #include "MatrizconVecores.cxx"
 #include <list>
+#include <algorithm>
 using namespace std;
 
 Curiosity curiosity;
@@ -280,7 +281,11 @@ void shell::verificarComandos(char comm[])
     try
     {
       float coeficiente = std::stof(partido[1]);
-      crearMapa(coeficiente);
+      if(coeficiente > 0 && coeficiente <1){
+        crearMapa(coeficiente);
+      }
+      else{cout << " no es decimal prueba otro"<< endl;}
+      
     }
     catch(const std::exception& e)
     {
@@ -822,11 +827,11 @@ void shell::crearMapa(float coeficiente)
 {
   cout << "Funcion crear Mapa" << endl;
   std::list<Elementos> elementos = curiosity.get_lista_de_elementos();
-  std::list<std::string> elenombre;
+  std::vector<std::string> elenombre;
 
-  float Numvecinos = elementos.size() * coeficiente;
+  int Numvecinos = elementos.size() * coeficiente;
   int contador =0;
-cout << "holaaaa" << endl;
+cout << "num Vecinos "<< Numvecinos<< endl;
   for(const auto ele : elementos){
     string anadir = string(1, ele.getTipoElemento()) + "_" + to_string(contador);
     grafo.insertarVertice(anadir);
@@ -838,8 +843,8 @@ cout << "holaaaa" << endl;
   for(auto nom : elenombre){
   cout << nom << endl;
   }
-  std::list<string>::iterator itnombre = elenombre.begin();
-  std::list<string>::iterator itnombrellegada = elenombre.begin();
+  std::vector<string>::iterator itnombre = elenombre.begin();
+  std::vector<string>::iterator itnombrellegada = elenombre.begin();
 
   for(auto ituno = elementos.begin();ituno !=elementos.end();ituno++){
 
@@ -852,11 +857,32 @@ cout << "holaaaa" << endl;
     itnombrellegada = elenombre.begin();
     itnombre++;
   }
-
   //   cout << "holaaaa2" << endl;
-
   grafo.imprimirMatriz();
+  
+  std::vector<string> nodos = grafo.getVertices(); 
+  int vecinosquedan = nodos.size() - Numvecinos;
+  cout << "vecinos a borrar" << vecinosquedan << endl;
+  std::vector<std::vector<float>> aristascopy = grafo.getAristas();
+  for(int k = 0 ; k < vecinosquedan-1 ; k++){
+      for(int i = 0;i< nodos.size();i++){
+        bool borrado = false;
+        float max = *max_element(aristascopy[i].begin(),aristascopy[i].end());
+      //cout<< "maximo "<<max << endl;
+        for(int j =0;j<nodos.size();j++){
+          if(aristascopy[i][j] == max && borrado == false){
+            borrado = true;
+            //cout << "pos"<<j<< endl;
+            //cout << "igual "<<aristascopy[i][j] << endl;
+            grafo.eliminarArista(elenombre[i],elenombre[j]);
+            aristascopy[i][j] = 0;
+          }
+        }
 
+      }
+  }
+  cout << "despues de borrar " << endl;
+  grafo.imprimirMatriz();
 }
 
 void shell::rutaMasLarga()
