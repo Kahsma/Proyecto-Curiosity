@@ -292,7 +292,7 @@ void shell::iniciarShell()
   limpiar();
   cout << "Cargando, por favor espere..." << endl;
   cout << '-' << flush;
-  for (int i = 0; i < 0; i++)
+  for (int i = 0; i < 1; i++)
   {
     std::cout << "\b\b\b\b\b\b\b\b\b\bLoading   " << std::flush;
     sleep(1);
