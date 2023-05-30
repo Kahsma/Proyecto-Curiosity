@@ -32,7 +32,7 @@ public:
   void enCuadrante(float x1,float x2,float y1,float y2);
   void salir();
   void ubicarElementos();
-  void crearMapa();
+  void crearMapa(float coeficiente);
   void rutaMasLarga();
   void limpiar();
 };
