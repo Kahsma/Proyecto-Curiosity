@@ -662,41 +662,118 @@ std::vector<std::vector<U>> laSuperFuncion() {
         std::cout << std::endl;
       }
     }
+    // Método para encontrar la distancia más larga entre dos nodos
+std::pair<U, std::vector<T>> longestPath(T origen) {
+    std::vector<bool> visitados(cantVertices(), false);
+    std::vector<T> camino;
+    std::pair<U, std::vector<T>> resultado = std::make_pair(0, camino);
 
+    int origenIdx = buscarVertice(origen);
+    if (origenIdx != -1) {
+        camino.push_back(origen);
+        dfsLongestPath(origenIdx, visitados, camino, 1, resultado);
+    }
+
+    return resultado;
+}
+
+// Método DFS para explorar todas las rutas y encontrar la más larga
+void dfsLongestPath(int vertice, std::vector<bool>& visitados, std::vector<T>& camino, U longitudActual, std::pair<U, std::vector<T>>& resultado) {
+    visitados[vertice] = true;
+
+    if (longitudActual > resultado.first) {
+        resultado.first = longitudActual;
+        resultado.second = camino;
+    }
+
+    for (int i = 0; i < cantVertices(); i++) {
+        if (aristas[vertice][i] != 0 && !visitados[i]) {
+            camino.push_back(vertices[i]);
+            dfsLongestPath(i, visitados, camino, longitudActual + 1, resultado);
+            camino.pop_back();
+        }
+    }
+
+    visitados[vertice] = false;
+}
+
+void imprimirRutaMasLarga(T origen) {
+    std::pair<U, std::vector<T>> resultado = longestPath(origen);
+
+    std::cout << "La ruta mas larga desde el nodo " << origen << " tiene una longitud de: " << resultado.first << std::endl;
+    std::cout << "La ruta es: ";
+    for (T nodo : resultado.second) {
+        std::cout << nodo << " ";
+    }
+    std::cout << std::endl;
+}
+
+// Método para encontrar todos los caminos más largos
+std::vector<std::pair<U, std::vector<T>>> todosCaminosMasLargos() {
+    U maxLongitud = 0;
+    std::vector<std::pair<U, std::vector<T>>> maxPaths;
+
+    for (T origen : vertices) {
+        std::pair<U, std::vector<T>> camino = longestPath(origen);
+        if (camino.first > maxLongitud) {
+            maxLongitud = camino.first;
+            maxPaths.clear();
+            maxPaths.push_back(camino);
+        } else if (camino.first == maxLongitud) {
+            maxPaths.push_back(camino);
+        }
+    }
+
+    return maxPaths;
+}
+
+// Método para imprimir todos los caminos más largos
+void imprimirTodosCaminosMasLargos() {
+    std::vector<std::pair<U, std::vector<T>>> resultados = todosCaminosMasLargos();
+
+    std::cout << "Los caminos mas largos tienen una longitud de: " << (resultados.empty() ? 0 : resultados[0].first) -1 << std::endl;
+    for (const auto& resultado : resultados) {
+        std::cout << "La ruta es: ";
+        for (T nodo : resultado.second) {
+            std::cout << nodo << " ";
+        }
+        std::cout << std::endl;
+    }
+}
    
 };
 
 
-int main() {
-    Grafo<char, int> grafo;
+// int main() {
+//     Grafo<char, int> grafo;
 
-    // Crear vértices
-    std::vector<char> vertices = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-    grafo.setVertices(vertices);
+//     // Crear vértices
+//     std::vector<char> vertices = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
+//     grafo.setVertices(vertices);
 
-    // // Insertar aristas
-    // grafo.insertarArista('A', 'B', 2);
-    // grafo.insertarArista('A', 'C', 4);
-    // grafo.insertarArista('B', 'C', 1);
-    // grafo.insertarArista('B', 'D', 7);
-    // grafo.insertarArista('C', 'D', 3);
-    // grafo.insertarArista('C', 'E', 5);
-    // grafo.insertarArista('D', 'E', 6);
-    // grafo.insertarArista('E', 'F', 8);
-    // grafo.insertarArista('E', 'G', 9);
+//     // // Insertar aristas
+//     // grafo.insertarArista('A', 'B', 2);
+//     // grafo.insertarArista('A', 'C', 4);
+//     // grafo.insertarArista('B', 'C', 1);
+//     // grafo.insertarArista('B', 'D', 7);
+//     // grafo.insertarArista('C', 'D', 3);
+//     // grafo.insertarArista('C', 'E', 5);
+//     // grafo.insertarArista('D', 'E', 6);
+//     // grafo.insertarArista('E', 'F', 8);
+//     // grafo.insertarArista('E', 'G', 9);
 
-    // Insertar aristas
-    grafo.insertarArista('A', 'B', 2);
-    grafo.insertarArista('A', 'C', 4);
-    grafo.insertarArista('B', 'D', 1);
-    grafo.insertarArista('C', 'E', 3);
-    grafo.insertarArista('D', 'F', 7);
-    grafo.insertarArista('E', 'F', 5);
-    grafo.insertarArista('E', 'G', 6);
+//     // Insertar aristas
+//     grafo.insertarArista('A', 'B', 2);
+//     grafo.insertarArista('A', 'C', 4);
+//     grafo.insertarArista('B', 'D', 1);
+//     grafo.insertarArista('C', 'E', 3);
+//     grafo.insertarArista('D', 'F', 7);
+//     grafo.insertarArista('E', 'F', 5);
+//     grafo.insertarArista('E', 'G', 6);
 
-    std::vector<std::vector<int> > laMatriz = grafo.laSuperFuncion();
+//     std::vector<std::vector<int> > laMatriz = grafo.laSuperFuncion();
 
     
 
-    return 0;
-}
+//     return 0;
+// }

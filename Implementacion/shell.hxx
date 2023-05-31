@@ -887,27 +887,34 @@ cout << "num Vecinos "<< Numvecinos<< endl;
 
 void shell::rutaMasLarga()
 {
-  cout << "Funcion ruta Mas Larga" << endl;
-  std::vector<std::vector<float>> laMatriz = grafo.laSuperFuncion();
-  cout << "Funcion ruta Mas Larga" << endl;
+  // cout << "Funcion ruta Mas Larga" << endl;
+  // grafo.imprimirMatriz();
+  // std::vector<std::vector<float>> laMatriz = grafo.laSuperFuncion();
+  // cout << "Funcion ruta Mas Larga" << endl;
 
 
-  int size = laMatriz.size();
+  // int size = laMatriz.size();
 
-  for (int i = 0; i < size; i++) {
-    for (int j = 0; j < size; j++) {
+  // for (int i = 0; i < size; i++) {
+  //   for (int j = 0; j < size; j++) {
 
-      if (laMatriz[i][j] > 0) {
+  //     if (laMatriz[i][j] > 0) {
 
-        cout << "Rutas Mas Largas:"<< endl;
-        cout <<grafo.getVertices()[i]<<" -> " << grafo.getVertices()[i]<<endl;
+  //       cout << "Rutas Mas Largas:"<< endl;
+  //       cout <<grafo.getVertices()[i]<<" -> " << grafo.getVertices()[i]<<endl;
 
     
       
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
+    std::vector<string> vertices= grafo.getVertices();
+    
+    grafo.imprimirTodosCaminosMasLargos();
 
+    
+
+    
 
 
 
