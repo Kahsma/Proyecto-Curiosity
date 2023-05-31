@@ -827,6 +827,10 @@ void shell::crearMapa(float coeficiente)
 {
   cout << "Funcion crear Mapa" << endl;
   std::list<Elementos> elementos = curiosity.get_lista_de_elementos();
+  if(elementos.empty()){
+    cout << " La informacion requerida no esta almacenada en memoria." << endl;
+    return ;
+  }
   std::vector<std::string> elenombre;
 
   int Numvecinos = elementos.size() * coeficiente;
