@@ -909,8 +909,13 @@ void shell::rutaMasLarga()
   //   }
   // }
     std::vector<string> vertices= grafo.getVertices();
+    if(vertices.size() != 0){
+      grafo.imprimirTodosCaminosMasLargos();
+    }
+    else{
+      cout << "El mapa no ha sido generado todavía (con el comando crear_mapa)." << endl;
+    }
     
-    grafo.imprimirTodosCaminosMasLargos();
 
     
 
